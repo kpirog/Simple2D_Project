@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class PlayerDeathState : BasePlayerState
+public class PlayerAttackState : BasePlayerState
 {
-    public PlayerDeathState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
+    public PlayerAttackState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
     {
 
     }
 
     public override void EnterState()
     {
-        Debug.Log("Death State");
+        Debug.Log("Attack State");
     }
 
     public override void ExitState()
@@ -19,6 +19,6 @@ public class PlayerDeathState : BasePlayerState
 
     public override void UpdateState()
     {
-        
+
     }
 }
