@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerDeathState : BasePlayerState
 {
+    private const string DeathAnimationKey = "Death";
+    
     public PlayerDeathState(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
     {
 
@@ -9,7 +11,7 @@ public class PlayerDeathState : BasePlayerState
 
     public override void EnterState()
     {
-        Debug.Log("Death State");
+        playerStateMachine.anim.SetTrigger(DeathAnimationKey);
     }
 
     public override void ExitState()
@@ -19,6 +21,9 @@ public class PlayerDeathState : BasePlayerState
 
     public override void UpdateState()
     {
-        
+        if (playerStateMachine.anim.GetCurrentAnimatorStateInfo(0).IsName(DeathAnimationKey))
+        {
+            playerStateMachine.DestroyPlayer();
+        }
     }
 }
