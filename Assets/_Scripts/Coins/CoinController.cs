@@ -23,7 +23,7 @@ public class CoinController : MonoBehaviour
     }
     private Coin CreateCoin()
     {
-        Coin coin = Instantiate(coinPrefab, Vector2.zero, Quaternion.identity);
+        Coin coin = Instantiate(coinPrefab, Vector2.zero, Quaternion.identity, transform);
         coin.SetPool(coinsPool);
 
         return coin;
