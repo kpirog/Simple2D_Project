@@ -5216,7 +5216,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 7604440582818579748, guid: 2fd4a6146a5de6a49bc9a3dc2de03f9b, type: 3}
   boxCollider: {fileID: 2016849140}
-  coinSpawnRate: 3
+  coinSpawnRate: 1.5
+  maxCoinAmount: 10
   onCoinCollected:
     m_PersistentCalls:
       m_Calls: []
