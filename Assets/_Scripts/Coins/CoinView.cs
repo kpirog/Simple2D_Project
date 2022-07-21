@@ -6,6 +6,7 @@ public class CoinView : MonoBehaviour
     [SerializeField] private TMP_Text coinCountText;
     
     private CoinController coinController;
+    private int coinCount;
 
     private void Awake()
     {
@@ -13,14 +14,15 @@ public class CoinView : MonoBehaviour
     }
     private void OnEnable()
     {
-        coinController.onCoinCollected += SetViewData;
+        coinController.onCoinCollected.AddListener(SetViewData);
     }
     private void OnDisable()
     {
-        coinController.onCoinCollected -= SetViewData;
+        coinController.onCoinCollected.RemoveListener(SetViewData);
     }
-    private void SetViewData(int coinCount)
+    private void SetViewData()
     {
+        coinCount++;
         coinCountText.text = coinCount.ToString();
     }
 }
