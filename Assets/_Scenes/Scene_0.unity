@@ -5107,13 +5107,13 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260598014}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06002423, y: 0.0046530296}
+  m_Offset: {x: 0.073230244, y: 0.004653029}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5124,7 +5124,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.040542394, y: 0.030220553}
+  m_Size: {x: 0.066954404, y: 0.030220553}
   m_EdgeRadius: 0
 --- !u!50 &1260598017
 Rigidbody2D:
@@ -5356,7 +5356,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1559728893
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 804497641, guid: 26709a380e71e6e47b5325d2418618cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5434,7 +5434,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0006248243, y: -0.019994384}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5445,7 +5445,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.09999155, y: 0.120011225}
   m_EdgeRadius: 0
 --- !u!95 &1849110163
 Animator:
@@ -5785,7 +5785,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1363769975
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 879977097, guid: 0bf588c8774b37e4ba97190a378b2971, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5827,7 +5827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10
-  jumpForce: 10
+  jumpForce: 8
   pushForce: 5
   groundCheckDistance: -0.5
   leftRayPosition: {x: 0.26, y: 0, z: 0}
@@ -5911,7 +5911,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponCollider: {fileID: 1260598016}
-  spriteRenderer: {fileID: 1999268116}
 --- !u!1 &2016849137
 GameObject:
   m_ObjectHideFlags: 0

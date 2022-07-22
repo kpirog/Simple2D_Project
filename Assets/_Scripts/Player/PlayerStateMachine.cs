@@ -20,6 +20,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Vector2 MovementDirection => movementDirection;
 
     private PlayerHealth playerHealth;
+    private PlayerAttackController playerAttackController;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private PlayerControls playerControls;
@@ -37,7 +38,8 @@ public class PlayerStateMachine : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        playerHealth = GetComponent<PlayerHealth>();    
+        playerHealth = GetComponent<PlayerHealth>();
+        playerAttackController = GetComponent<PlayerAttackController>();
         playerControls = new PlayerControls();
         moveAction = playerControls.Gameplay.Move;
         jumpAction = playerControls.Gameplay.Jump;
@@ -100,6 +102,8 @@ public class PlayerStateMachine : MonoBehaviour
     private void SetSpriteDirection(float direction)
     {
         spriteRenderer.flipX = direction != 1 ? true : false;
+
+        playerAttackController.SetColliderDirection(spriteRenderer.flipX);
     }
     public void DestroyPlayer()
     {

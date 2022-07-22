@@ -3,8 +3,7 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D weaponCollider;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    
+
     private int attackAnimationKey = Animator.StringToHash("Attack");
 
     private Animator anim;
@@ -31,21 +30,24 @@ public class PlayerAttackController : MonoBehaviour
     }
     public void EnableWeaponCollider()
     {
-        SetColliderDirection(spriteRenderer.flipX);
-
         weaponCollider.enabled = true;
     }
     public void DisableWeaponCollider()
     {
-        SetColliderDirection(false);
-        
         weaponCollider.enabled = false;
     }
-    private void SetColliderDirection(bool leftDirection)
+    public void SetColliderDirection(bool isLeft)
     {
         Vector3 colliderPos = weaponCollider.offset;
 
-        colliderPos.x = leftDirection ? -colliderPos.x : colliderPos.x;
+        if (isLeft)
+        {
+            colliderPos.x *= -1f;
+        }
+        else
+        {
+            colliderPos.x = Mathf.Abs(colliderPos.x);
+        }
 
         weaponCollider.offset = colliderPos;
     }
