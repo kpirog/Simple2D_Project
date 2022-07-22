@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 320396729}
   - component: {fileID: 320396730}
   - component: {fileID: 320396731}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle (3)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 426272691}
   - component: {fileID: 426272692}
   - component: {fileID: 426272693}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle (2)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -4704,7 +4704,7 @@ GameObject:
   - component: {fileID: 542189094}
   - component: {fileID: 542189095}
   - component: {fileID: 542189096}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -5611,7 +5611,7 @@ GameObject:
   - component: {fileID: 1718539696}
   - component: {fileID: 1718539697}
   - component: {fileID: 1718539698}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacle (1)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -5702,7 +5702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1849110158
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5863,7 +5863,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.075
-  m_Speed: 0
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

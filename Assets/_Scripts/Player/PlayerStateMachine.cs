@@ -68,6 +68,8 @@ public class PlayerStateMachine : MonoBehaviour
     {
         Move();
 
+        Debug.Log(currentState.GetType().Name);
+
         currentState.UpdateState();
     }
     private void OnDestroy()
