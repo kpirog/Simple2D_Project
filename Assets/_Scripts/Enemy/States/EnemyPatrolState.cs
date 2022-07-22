@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyPatrolState : EnemyBaseState
 {
     private Vector2 patrolDestination;
+    private int walkingAnimKey = Animator.StringToHash("IsWalking");
 
     public EnemyPatrolState(EnemyStateMachine enemyStateMachine) : base(enemyStateMachine)
     {
@@ -11,14 +12,19 @@ public class EnemyPatrolState : EnemyBaseState
     public override void EnterState()
     {
         Debug.Log("Patrol state");
+        enemyStateMachine.anim.SetBool(walkingAnimKey, true);
         patrolDestination = GetRandomPatrolPosition();
     }
     public override void ExitState()
     {
-
+        enemyStateMachine.anim.SetBool(walkingAnimKey, false);
     }
     public override void UpdateState()
     {
+        if (!enemyStateMachine.IsAlive)
+        {
+            enemyStateMachine.SwitchState(new EnemyDeathState(enemyStateMachine));
+        }
         if (!enemyStateMachine.CanPatrol)
         {
             enemyStateMachine.SwitchState(new EnemyIdleState(enemyStateMachine));
@@ -44,7 +50,7 @@ public class EnemyPatrolState : EnemyBaseState
             return;
         }
 
-        Debug.Log("Idzie");
+        enemyStateMachine.SetSpriteDirection(patrolDestination.x);
         enemyStateMachine.agent.SetDestination(patrolDestination);
     }
 }

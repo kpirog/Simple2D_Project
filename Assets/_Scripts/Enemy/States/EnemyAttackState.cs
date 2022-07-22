@@ -16,6 +16,9 @@ public class EnemyAttackState : EnemyBaseState
     }
     public override void UpdateState()
     {
-
+        if (!enemyStateMachine.IsAlive)
+        {
+            enemyStateMachine.SwitchState(new EnemyDeathState(enemyStateMachine));
+        }
     }
 }

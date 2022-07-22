@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyDeathState : EnemyBaseState
 {
+    private const string DeathAnimationKey = "Death";
+
     public EnemyDeathState(EnemyStateMachine enemyStateMachine) : base(enemyStateMachine)
     {
 
@@ -9,7 +11,7 @@ public class EnemyDeathState : EnemyBaseState
 
     public override void EnterState()
     {
-
+        enemyStateMachine.anim.SetTrigger(DeathAnimationKey);
     }
 
     public override void ExitState()
@@ -19,6 +21,9 @@ public class EnemyDeathState : EnemyBaseState
 
     public override void UpdateState()
     {
-
+        if (enemyStateMachine.anim.GetCurrentAnimatorStateInfo(0).IsName(DeathAnimationKey))
+        {
+            GameObject.Destroy(enemyStateMachine.gameObject);
+        }
     }
 }

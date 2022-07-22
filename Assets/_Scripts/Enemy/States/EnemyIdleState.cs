@@ -23,6 +23,10 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void UpdateState()
     {
+        if (!enemyStateMachine.IsAlive)
+        {
+            enemyStateMachine.SwitchState(new EnemyDeathState(enemyStateMachine));
+        }
         if (enemyStateMachine.CanPatrol)
         {
             enemyStateMachine.SwitchState(new EnemyPatrolState(enemyStateMachine));
