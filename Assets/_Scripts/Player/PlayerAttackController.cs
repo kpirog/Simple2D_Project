@@ -40,13 +40,13 @@ public class PlayerAttackController : MonoBehaviour
     {
         Vector3 colliderPos = weaponCollider.offset;
 
-        if (isLeft)
+        if ((isLeft && colliderPos.x > 0f) || (!isLeft && colliderPos.x < 0f))
         {
             colliderPos.x *= -1f;
         }
         else
         {
-            colliderPos.x = Mathf.Abs(colliderPos.x);
+            return;
         }
 
         weaponCollider.offset = colliderPos;

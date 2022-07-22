@@ -11,7 +11,6 @@ public class EnemyPatrolState : EnemyBaseState
     }
     public override void EnterState()
     {
-        Debug.Log("Patrol state");
         enemyStateMachine.anim.SetBool(walkingAnimKey, true);
         patrolDestination = GetRandomPatrolPosition();
     }

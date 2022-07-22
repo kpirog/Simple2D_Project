@@ -11,7 +11,6 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void EnterState()
     {
-        Debug.Log("Idle state");
         patrolTimer = enemyStateMachine.PatrolRate;
         enemyStateMachine.CanPatrol = false;
     }
