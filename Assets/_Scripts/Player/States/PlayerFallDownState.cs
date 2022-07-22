@@ -20,6 +20,8 @@ public class PlayerFallDownState : BasePlayerState
 
     public override void UpdateState()
     {
+        if (!playerStateMachine.IsAlive) { playerStateMachine.SwitchState(new PlayerDeathState(playerStateMachine)); }
+
         if (playerStateMachine.IsGrounded())
         {
             playerStateMachine.SwitchState(new PlayerIdleState(playerStateMachine));

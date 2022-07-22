@@ -4,6 +4,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 3;
     [SerializeField] private HealthView healthView;
+    [SerializeField] private PlayerStateMachine playerStateMachine;
 
     private int currentHealth;
     public int CurrentHealth => currentHealth;
@@ -13,10 +14,19 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         healthView.onHealthUpdated?.Invoke(CurrentHealth);
     }
-    [ContextMenu("Take Damage")]
     public void TakeDamage()
     {
         currentHealth--;
         healthView.onHealthUpdated?.Invoke(CurrentHealth);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Transform enemy = collision.transform;
+        
+        if (enemy.CompareTag("Enemy"))
+        {
+            TakeDamage();
+            playerStateMachine.PushPlayerInDirection(enemy.right);
+        }
     }
 }

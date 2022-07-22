@@ -6,6 +6,7 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Movement settings")]
     [SerializeField] private float movementSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float pushForce;
 
     [Header("Ground check settings")]
     [SerializeField] private float groundCheckDistance = -0.5f;
@@ -18,6 +19,7 @@ public class PlayerStateMachine : MonoBehaviour
     private Vector2 movementDirection;
     public Vector2 MovementDirection => movementDirection;
 
+    private PlayerHealth playerHealth;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private PlayerControls playerControls;
@@ -28,13 +30,14 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsJumping => jumpAction.triggered && rb.velocity.y > 0f;
     public bool IsFallingDown => rb.velocity.y < 0f;
 
-    public bool IsAlive { get; private set; } = true;
+    public bool IsAlive => playerHealth.CurrentHealth > 0;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playerHealth = GetComponent<PlayerHealth>();    
         playerControls = new PlayerControls();
         moveAction = playerControls.Gameplay.Move;
         jumpAction = playerControls.Gameplay.Jump;
@@ -61,14 +64,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void Update()
     {
-        if (!IsAlive && currentState as PlayerDeathState == null)
-        {
-            SwitchState(new PlayerDeathState(this));
-        }
-        else
-        {
-            Move();
-        }
+        Move();
 
         currentState.UpdateState();
     }
@@ -98,15 +94,8 @@ public class PlayerStateMachine : MonoBehaviour
     }
     public bool IsGrounded()
     {
-        DrawRays();
-
         return Physics2D.Raycast(transform.position + leftRayPosition, transform.up, groundCheckDistance, groundLayerMask)
             || Physics2D.Raycast(transform.position + rightRayPosition, transform.up, groundCheckDistance, groundLayerMask);
-    }
-    private void DrawRays()
-    {
-        Debug.DrawRay(transform.position + rightRayPosition, transform.up * groundCheckDistance, Color.red);
-        Debug.DrawRay(transform.position + leftRayPosition, transform.up * groundCheckDistance, Color.red);
     }
     private void SetSpriteDirection(float direction)
     {
@@ -115,5 +104,9 @@ public class PlayerStateMachine : MonoBehaviour
     public void DestroyPlayer()
     {
         Destroy(gameObject);
+    }
+    public void PushPlayerInDirection(Vector2 direction)
+    {
+        rb.AddForce(direction * pushForce, ForceMode2D.Impulse);
     }
 }

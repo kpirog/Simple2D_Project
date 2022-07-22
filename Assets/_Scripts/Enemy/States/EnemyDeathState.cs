@@ -21,9 +21,9 @@ public class EnemyDeathState : EnemyBaseState
 
     public override void UpdateState()
     {
-        if (enemyStateMachine.anim.GetCurrentAnimatorStateInfo(0).IsName(DeathAnimationKey))
+        if (enemyStateMachine.anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f && !enemyStateMachine.anim.IsInTransition(0))
         {
-            GameObject.Destroy(enemyStateMachine.gameObject);
+            enemyStateMachine.DestroyEnemy();
         }
     }
 }

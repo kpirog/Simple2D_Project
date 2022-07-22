@@ -8,7 +8,6 @@ public class PlayerMoveState : BasePlayerState
     {
 
     }
-
     public override void EnterState()
     {
         playerStateMachine.anim.SetBool(MoveAnimationKey, true);
@@ -18,14 +17,15 @@ public class PlayerMoveState : BasePlayerState
     {
         playerStateMachine.anim.SetBool(MoveAnimationKey, false);
     }
-
     public override void UpdateState()
     {
+        if (!playerStateMachine.IsAlive) { playerStateMachine.SwitchState(new PlayerDeathState(playerStateMachine)); }
+
         if (playerStateMachine.MovementDirection == Vector2.zero)
         {
             playerStateMachine.SwitchState(new PlayerIdleState(playerStateMachine));
         }
-        else if(playerStateMachine.IsJumping)
+        else if (playerStateMachine.IsJumping)
         {
             playerStateMachine.SwitchState(new PlayerJumpState(playerStateMachine));
         }

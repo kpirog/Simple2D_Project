@@ -16,6 +16,8 @@ public class PlayerIdleState : BasePlayerState
     }
     public override void UpdateState()
     {
+        if (!playerStateMachine.IsAlive) { playerStateMachine.SwitchState(new PlayerDeathState(playerStateMachine)); }
+
         if (playerStateMachine.MovementDirection != Vector2.zero)
         {
             playerStateMachine.SwitchState(new PlayerMoveState(playerStateMachine));

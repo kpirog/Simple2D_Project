@@ -16,6 +16,15 @@ public class EnemyHealth : MonoBehaviour
     {
         if (currentHealth <= 0) { return; }
 
+        Debug.Log("Otrzymuje obrazenia");
+
         currentHealth--;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerWeapon"))
+        {
+            TakeDamage();
+        }
     }
 }

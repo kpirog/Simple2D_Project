@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class PlayerAttackController : MonoBehaviour
 {
-    private int attackAnimationKey = Animator.StringToHash("Attack");
+    [SerializeField] private BoxCollider2D weaponCollider;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     
+    private int attackAnimationKey = Animator.StringToHash("Attack");
+
     private Animator anim;
     private PlayerControls playerControls;
 
@@ -25,5 +28,25 @@ public class PlayerAttackController : MonoBehaviour
     private void Attack()
     {
         anim.SetTrigger(attackAnimationKey);
+    }
+    public void EnableWeaponCollider()
+    {
+        SetColliderDirection(spriteRenderer.flipX);
+
+        weaponCollider.enabled = true;
+    }
+    public void DisableWeaponCollider()
+    {
+        SetColliderDirection(false);
+        
+        weaponCollider.enabled = false;
+    }
+    private void SetColliderDirection(bool leftDirection)
+    {
+        Vector3 colliderPos = weaponCollider.offset;
+
+        colliderPos.x = leftDirection ? -colliderPos.x : colliderPos.x;
+
+        weaponCollider.offset = colliderPos;
     }
 }

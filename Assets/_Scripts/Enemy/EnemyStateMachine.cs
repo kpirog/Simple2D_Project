@@ -56,4 +56,8 @@ public class EnemyStateMachine : MonoBehaviour
     {
         spriteRenderer.flipX = direction < 0f ? true : false;
     }
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
+    }
 }

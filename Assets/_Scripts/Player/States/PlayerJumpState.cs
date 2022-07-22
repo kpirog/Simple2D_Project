@@ -20,6 +20,8 @@ public class PlayerJumpState : BasePlayerState
 
     public override void UpdateState()
     {
+        if (!playerStateMachine.IsAlive) { playerStateMachine.SwitchState(new PlayerDeathState(playerStateMachine)); }
+
         if (playerStateMachine.IsFallingDown)
         {
             playerStateMachine.SwitchState(new PlayerFallDownState(playerStateMachine));
