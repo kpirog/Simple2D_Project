@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Pool;
+using System.Linq;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnRate;
 
     private ObjectPool<EnemyStateMachine> enemiesPool;
+    private EnemyStateMachine lastSpawnedEnemy;
 
     private void Awake()
     {
@@ -21,7 +23,9 @@ public class EnemySpawner : MonoBehaviour
     }
     private EnemyStateMachine CreateEnemy()
     {
-        EnemyStateMachine enemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], transform.position, Quaternion.identity);
+        EnemyStateMachine selectedEnemy = SelectEnemyToSpawn(ref lastSpawnedEnemy);
+
+        EnemyStateMachine enemy = Instantiate(selectedEnemy, transform.position, Quaternion.identity, transform);
         enemy.SetPool(enemiesPool);
 
         return enemy;
@@ -41,5 +45,23 @@ public class EnemySpawner : MonoBehaviour
     {
         enemy.anim.Rebind();
         enemy.gameObject.SetActive(false);
+    }
+    private EnemyStateMachine SelectEnemyToSpawn(ref EnemyStateMachine enemy)
+    {
+        if (enemy == null)
+        {
+            enemy = GetRandomEnemy();
+        }
+        else
+        {
+            EnemyType lastEnemyType = enemy.EnemyType;
+            enemy = enemyPrefabs.Where(x => x.EnemyType != lastEnemyType).FirstOrDefault();
+        }
+
+        return enemy;
+    }
+    private EnemyStateMachine GetRandomEnemy()
+    {
+        return enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
     }
 }

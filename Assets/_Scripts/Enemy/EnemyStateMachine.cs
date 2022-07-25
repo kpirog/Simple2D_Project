@@ -36,6 +36,7 @@ public class EnemyStateMachine : MonoBehaviour
     [HideInInspector] public Animator anim;
     [HideInInspector] public Rigidbody2D rb;
 
+    public EnemyType EnemyType => enemyType;
     public float PatrolRate => patrolRate;
     public float MinPatrolDistance => minPatrolDistance;
     public Vector2 PatrolRange => patrolRange;
