@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1679726547981548426}
   m_Layer: 8
   m_Name: Mushroom
-  m_TagString: Enemy
+  m_TagString: Mushroom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,18 +191,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347994d380d01b2458d0897123efd0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolRange: {x: -8.5, y: 8.5}
+  patrolRange: {x: -8, y: 8}
   patrolRate: 5
-  distanceToPlayer: 0
+  minPatrolDistance: 1
+  distanceToPlayer: 2
   groundCheckDistance: -0.5
   leftRayPosition: {x: 0, y: 0, z: 0}
   rightRayPosition: {x: 0, y: 0, z: 0}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  enemyType: 0
+  enemyType: 1
   agent: {fileID: 0}
   anim: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!114 &1679726547981548426
 MonoBehaviour:
   m_ObjectHideFlags: 0
