@@ -11,8 +11,11 @@ public class EnemyPatrolState : EnemyBaseState
     }
     public override void EnterState()
     {
+        Debug.Log("Patrol state");
+        enemyStateMachine.agent.isStopped = false;
         enemyStateMachine.anim.SetBool(walkingAnimKey, true);
-        patrolDestination = GetRandomPatrolPosition();
+
+        patrolDestination = new Vector2(GetRandomPatrolXPos(), enemyStateMachine.rb.velocity.y);
     }
     public override void ExitState()
     {
@@ -24,32 +27,91 @@ public class EnemyPatrolState : EnemyBaseState
         {
             enemyStateMachine.SwitchState(new EnemyDeathState(enemyStateMachine));
         }
-        if (!enemyStateMachine.CanPatrol)
+        else
         {
-            enemyStateMachine.SwitchState(new EnemyIdleState(enemyStateMachine));
+            if (enemyStateMachine.CanAttack)
+            {
+                enemyStateMachine.SwitchState(new EnemyAttackState(enemyStateMachine));
+            }
+            else if (!enemyStateMachine.CanPatrol)
+            {
+                enemyStateMachine.SwitchState(new EnemyIdleState(enemyStateMachine));
+            }
+            else if(enemyStateMachine.CanPatrol)
+            {
+                SetDestination();
+            }
+        }
+    }
+    private float GetRandomPatrolXPos()
+    {
+        float minDistance;
+        float maxDistance;
+
+        SetPatrolDistance(out minDistance, out maxDistance);
+
+        return Random.Range(minDistance, maxDistance);
+    }
+    private void SetPatrolDistance(out float minDistance, out float maxDistance)
+    {
+        float currentXPos = enemyStateMachine.transform.position.x;
+        int direction = SetPatrolDirection(currentXPos);
+
+        maxDistance = direction > 0 ? enemyStateMachine.PatrolRange.y : enemyStateMachine.PatrolRange.x;
+        minDistance = direction > 0 ? currentXPos + enemyStateMachine.MinPatrolDistance : currentXPos - enemyStateMachine.MinPatrolDistance;
+
+        if (((minDistance >= maxDistance) && direction > 0) || ((minDistance <= maxDistance) && direction < 0))
+        {
+            maxDistance = -maxDistance;
+        }
+
+        enemyStateMachine.SetSpriteDirection(maxDistance);
+    }
+    private int SetPatrolDirection(float currentXPos)
+    {
+        int direction;
+
+        if (currentXPos <= enemyStateMachine.PatrolRange.x)
+        {
+            direction = 1;
+        }
+        else if (currentXPos >= enemyStateMachine.PatrolRange.y)
+        {
+            direction = -1;
         }
         else
         {
-            SetDestination();
+            direction = Random.value > 0 ? 1 : -1;
         }
-    }
-    private Vector2 GetRandomPatrolPosition()
-    {
-        return new Vector2
-        (
-            x: Random.Range(enemyStateMachine.PatrolRange.x, enemyStateMachine.PatrolRange.y),
-            y: enemyStateMachine.transform.position.y
-        );
+
+        return direction;
     }
     private void SetDestination()
     {
-        if ((Vector2)enemyStateMachine.transform.position == patrolDestination)
+        if (HasEnemyReached())
         {
             enemyStateMachine.CanPatrol = false;
+            enemyStateMachine.agent.isStopped = true;
             return;
         }
 
-        enemyStateMachine.SetSpriteDirection(patrolDestination.x);
+        if (enemyStateMachine.IsGrounded())
+            patrolDestination.y = enemyStateMachine.rb.velocity.y;
+        else
+            patrolDestination.y = 0f;
+
         enemyStateMachine.agent.SetDestination(patrolDestination);
+    }
+    private bool HasEnemyReached()
+    {
+        float roundedXPos = Mathf.Round(enemyStateMachine.transform.position.x * 100f) / 100f;
+        float roundedDestination = Mathf.Round(patrolDestination.x * 100f) / 100f;
+
+        if (roundedXPos == roundedDestination && enemyStateMachine.IsGrounded())
+        {
+            return true;
+        }
+
+        return false;
     }
 }

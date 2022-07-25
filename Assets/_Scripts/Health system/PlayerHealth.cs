@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Transform enemy = collision.transform;
         
-        if (enemy.CompareTag("Enemy"))
+        if (enemy.CompareTag("Mushroom"))
         {
             TakeDamage();
             playerStateMachine.PushPlayerInDirection(enemy.right);

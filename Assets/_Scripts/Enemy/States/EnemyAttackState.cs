@@ -8,7 +8,7 @@ public class EnemyAttackState : EnemyBaseState
     }
     public override void EnterState()
     {
-
+        
     }
     public override void ExitState()
     {
@@ -19,6 +19,17 @@ public class EnemyAttackState : EnemyBaseState
         if (!enemyStateMachine.IsAlive)
         {
             enemyStateMachine.SwitchState(new EnemyDeathState(enemyStateMachine));
+        }
+        else
+        {
+            if (enemyStateMachine.CanAttack)
+            {
+                enemyStateMachine.agent.SetDestination(enemyStateMachine.PlayerPosition);
+            }
+            else
+            {
+                enemyStateMachine.SwitchState(new EnemyIdleState(enemyStateMachine));
+            }
         }
     }
 }

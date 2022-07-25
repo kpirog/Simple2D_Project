@@ -15,7 +15,7 @@ public class CoinController : MonoBehaviour
     [SerializeField] private float overlapCircleRadius;
 
     private ObjectPool<Coin> coinsPool;
-    private Collider2D[] obstaclesColliders;
+    public Collider2D[] obstaclesColliders;
     private bool isActivated = true;
 
     private bool CanSpawnCoins => coinsPool.CountActive < maxCoinsAmount;
