@@ -109,8 +109,30 @@ public class PlayerStateMachine : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    public void PushPlayerInDirection(Vector2 direction)
+    public void PushPlayerInDirection(Vector2 position)
     {
+        Vector2 direction = Vector2.zero;
+
+        if (position.x > transform.position.x)
+        {
+            direction = Vector2.left;
+        }
+        else
+        {
+            direction = Vector2.right;
+        }
+
         rb.AddForce(direction * pushForce, ForceMode2D.Impulse);
+    }
+    public void SetPlayerXConstraint(bool enable)
+    {
+        if (enable)
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints2D.None | RigidbodyConstraints2D.FreezeRotation;
+        }
     }
 }

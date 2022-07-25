@@ -2,17 +2,22 @@ using UnityEngine;
 
 public class EnemyAttackState : EnemyBaseState
 {
+    private int attackAnimKey = Animator.StringToHash("IsAttacking");
+
     public EnemyAttackState(EnemyStateMachine enemyStateMachine) : base(enemyStateMachine)
     {
 
     }
     public override void EnterState()
     {
-        
+        if (!enemyStateMachine.agent.isStopped)
+            enemyStateMachine.agent.isStopped = true;
+
+        enemyStateMachine.anim.SetBool(attackAnimKey, true);
     }
     public override void ExitState()
     {
-
+        enemyStateMachine.anim.SetBool(attackAnimKey, false);
     }
     public override void UpdateState()
     {
@@ -22,11 +27,11 @@ public class EnemyAttackState : EnemyBaseState
         }
         else
         {
-            if (enemyStateMachine.CanAttack)
+            if (!enemyStateMachine.CanAttack && enemyStateMachine.IsChasing)
             {
-                enemyStateMachine.agent.SetDestination(enemyStateMachine.PlayerPosition);
+                enemyStateMachine.SwitchState(new EnemyChaseState(enemyStateMachine));
             }
-            else
+            else if(!enemyStateMachine.CanAttack && !enemyStateMachine.IsChasing)
             {
                 enemyStateMachine.SwitchState(new EnemyIdleState(enemyStateMachine));
             }

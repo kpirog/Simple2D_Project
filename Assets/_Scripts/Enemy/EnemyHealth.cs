@@ -6,7 +6,7 @@ public class EnemyHealth : MonoBehaviour
 
     private Animator anim;
     private int getHitAnimationKey = Animator.StringToHash("GetHit");
-   
+
     private int currentHealth;
     public int CurrentHealth => currentHealth;
 
@@ -25,11 +25,6 @@ public class EnemyHealth : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
-            Debug.Log("Enemy colliduje z enemy");
-        }
-        
         if (collision.gameObject.CompareTag("PlayerWeapon"))
         {
             TakeDamage();

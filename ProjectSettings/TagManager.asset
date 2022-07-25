@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - Goblin
   - Mushroom
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX

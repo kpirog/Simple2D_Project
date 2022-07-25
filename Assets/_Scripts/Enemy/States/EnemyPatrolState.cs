@@ -11,8 +11,9 @@ public class EnemyPatrolState : EnemyBaseState
     }
     public override void EnterState()
     {
-        Debug.Log("Patrol state");
-        enemyStateMachine.agent.isStopped = false;
+        if (enemyStateMachine.agent.isStopped)
+            enemyStateMachine.agent.isStopped = false;
+        
         enemyStateMachine.anim.SetBool(walkingAnimKey, true);
 
         patrolDestination = new Vector2(GetRandomPatrolXPos(), enemyStateMachine.rb.velocity.y);
@@ -29,9 +30,9 @@ public class EnemyPatrolState : EnemyBaseState
         }
         else
         {
-            if (enemyStateMachine.CanAttack)
+            if (enemyStateMachine.IsChasing)
             {
-                enemyStateMachine.SwitchState(new EnemyAttackState(enemyStateMachine));
+                enemyStateMachine.SwitchState(new EnemyChaseState(enemyStateMachine));
             }
             else if (!enemyStateMachine.CanPatrol)
             {

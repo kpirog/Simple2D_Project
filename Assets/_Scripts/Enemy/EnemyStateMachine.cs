@@ -8,8 +8,11 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] private float patrolRate;
     [SerializeField] private float minPatrolDistance = 1.0f;
 
+    [Header("Chase settings")]
+    [SerializeField] private float distanceToChase;
+
     [Header("Attack settings")]
-    [SerializeField] private float distanceToPlayer;
+    [SerializeField] private float distanceToAttack;
 
     [Header("Ground check settings")]
     [SerializeField] private float groundCheckDistance = -0.5f;
@@ -21,11 +24,11 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] private EnemyType enemyType;
 
     private EnemyBaseState currentState;
-
     private EnemyHealth enemyHealth;
     private PlayerHealth player;
     private SpriteRenderer spriteRenderer;
 
+    [HideInInspector] public EnemyWeapon enemyWeapon;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Animator anim;
     [HideInInspector] public Rigidbody2D rb;
@@ -36,12 +39,22 @@ public class EnemyStateMachine : MonoBehaviour
     public Vector3 PlayerPosition => player.transform.position;
     public bool CanPatrol { get; set; }
     public bool IsAlive => enemyHealth.CurrentHealth > 0;
+    public bool IsChasing
+    {
+        get
+        {
+            return player.CurrentHealth > 0 &&
+                Vector2.Distance(player.transform.position, transform.position) <= distanceToChase &&
+                Vector2.Distance(player.transform.position, transform.position) > distanceToAttack &&
+                enemyType == EnemyType.Angry;
+        }
+    }
     public bool CanAttack
     {
         get
         {
             return player.CurrentHealth > 0 &&
-                Vector2.Distance(player.transform.position, transform.position) <= distanceToPlayer &&
+                Vector2.Distance(player.transform.position, transform.position) <= distanceToAttack &&
                 enemyType == EnemyType.Angry;
         }
     }
@@ -52,6 +65,7 @@ public class EnemyStateMachine : MonoBehaviour
         player = FindObjectOfType<PlayerHealth>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyHealth = GetComponent<EnemyHealth>();
+        enemyWeapon = GetComponent<EnemyWeapon>();
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody2D>();
         agent.updateRotation = false;
@@ -63,8 +77,11 @@ public class EnemyStateMachine : MonoBehaviour
     }
     private void Update()
     {
-        //Debug.Log(IsGrounded());
-        
+        if (enemyType == EnemyType.Angry && currentState is not EnemyAttackState)
+        {
+            enemyWeapon.DisableWeaponCollider();
+        }
+
         currentState.UpdateState();
     }
     private void OnDestroy()
@@ -83,8 +100,10 @@ public class EnemyStateMachine : MonoBehaviour
     }
     public void SetSpriteDirection(float direction)
     {
-        Debug.Log("direction = " + direction);
         spriteRenderer.flipX = direction < 0f ? true : false;
+
+        if (enemyWeapon != null)
+            enemyWeapon.SetColliderDirection(spriteRenderer.flipX);
     }
     public void DestroyEnemy()
     {
