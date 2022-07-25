@@ -158,7 +158,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!195 &5168922476644722372
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -196,8 +196,8 @@ MonoBehaviour:
   patrolRange: {x: -8, y: 8}
   patrolRate: 5
   minPatrolDistance: 1
-  distanceToChase: 0
-  distanceToAttack: 0
+  distanceToChase: 2
+  distanceToAttack: 0.8
   groundCheckDistance: -0.5
   leftRayPosition: {x: 0, y: 0, z: 0}
   rightRayPosition: {x: 0, y: 0, z: 0}
@@ -205,6 +205,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   enemyType: 0
+  enemyHealth: {fileID: 0}
+  enemyWeapon: {fileID: 0}
   agent: {fileID: 0}
   anim: {fileID: 0}
   rb: {fileID: 0}

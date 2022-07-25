@@ -166,7 +166,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1679726547981548434}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.075
+  m_Radius: 0.001
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -175,7 +175,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.16
+  m_Height: 0.12
   m_BaseOffset: 0.08
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -194,7 +194,8 @@ MonoBehaviour:
   patrolRange: {x: -8, y: 8}
   patrolRate: 5
   minPatrolDistance: 1
-  distanceToPlayer: 2
+  distanceToChase: 0
+  distanceToAttack: 0
   groundCheckDistance: -0.5
   leftRayPosition: {x: 0, y: 0, z: 0}
   rightRayPosition: {x: 0, y: 0, z: 0}
@@ -202,6 +203,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   enemyType: 1
+  enemyHealth: {fileID: 0}
+  enemyWeapon: {fileID: 0}
   agent: {fileID: 0}
   anim: {fileID: 0}
   rb: {fileID: 0}

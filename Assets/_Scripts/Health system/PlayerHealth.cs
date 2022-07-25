@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (enemy.CompareTag("Mushroom") || enemy.CompareTag("EnemyWeapon"))
         {
-            TakeDamage();
+            //TakeDamage();
         }
     }
     private void OnCollisionStay2D(Collision2D collision)

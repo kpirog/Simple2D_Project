@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 public class EnemyStateMachine : MonoBehaviour
 {
@@ -24,10 +25,12 @@ public class EnemyStateMachine : MonoBehaviour
     [SerializeField] private EnemyType enemyType;
 
     private EnemyBaseState currentState;
-    private EnemyHealth enemyHealth;
+    private ObjectPool<EnemyStateMachine> enemiesPool;
+
     private PlayerHealth player;
     private SpriteRenderer spriteRenderer;
 
+    [HideInInspector] public EnemyHealth enemyHealth;
     [HideInInspector] public EnemyWeapon enemyWeapon;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Animator anim;
@@ -105,13 +108,17 @@ public class EnemyStateMachine : MonoBehaviour
         if (enemyWeapon != null)
             enemyWeapon.SetColliderDirection(spriteRenderer.flipX);
     }
-    public void DestroyEnemy()
+    public void ReleaseEnemy()
     {
-        Destroy(gameObject);
+        enemiesPool.Release(this);
     }
     public bool IsGrounded()
     {
         return Physics2D.Raycast(transform.position + leftRayPosition, transform.up, groundCheckDistance, groundLayerMask)
             || Physics2D.Raycast(transform.position + rightRayPosition, transform.up, groundCheckDistance, groundLayerMask);
+    }
+    public void SetPool(ObjectPool<EnemyStateMachine> pool)
+    {
+        enemiesPool = pool;
     }
 }

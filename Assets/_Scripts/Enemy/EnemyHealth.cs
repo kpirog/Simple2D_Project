@@ -13,7 +13,14 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
+        ReviveEnemy();
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerWeapon"))
+        {
+            TakeDamage();
+        }
     }
     public void TakeDamage()
     {
@@ -23,11 +30,8 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth--;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void ReviveEnemy()
     {
-        if (collision.gameObject.CompareTag("PlayerWeapon"))
-        {
-            TakeDamage();
-        }
+        currentHealth = maxHealth;
     }
 }
