@@ -64,4 +64,9 @@ public class EnemySpawner : MonoBehaviour
     {
         return enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
     }
+    public void SetRoundDataSettings(float timeToFirstSpawn, float spawnRate)
+    {
+        this.timeToFirstSpawn = timeToFirstSpawn;
+        this.spawnRate = spawnRate;
+    }
 }

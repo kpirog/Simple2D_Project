@@ -7,23 +7,19 @@ public class GameRoundUI : MonoBehaviour
     [SerializeField] private RoundObjectiveSlot[] roundObjectiveSlots;
     [SerializeField] private TMP_Text roundTitle;
     
-    private GameController gameController;
-
-    private void Awake()
-    {
-        gameController = GameController.Instance;
-    }
     private void OnEnable()
     {
-        gameController.OnRoundScreenLoaded += SetViewData;
+        EventManager.OnRoundScreenLoad += SetViewData;
     }
     private void OnDisable()
     {
-        gameController.OnRoundScreenLoaded -= SetViewData;
+        EventManager.OnRoundScreenLoad -= SetViewData;
     }
     private void SetViewData(GameRoundData roundData)
     {
-        roundTitle.text = $"Round {gameController.CurrentRoundIndex + 1}";
+        Debug.Log("To");
+        
+        roundTitle.text = $"Round {GameRoundController.Instance.CurrentRoundIndex + 1}";
         
         roundObjectiveSlots[0].SetObjectiveText(roundData.MushroomsToKill);
         roundObjectiveSlots[1].SetObjectiveText(roundData.GoblinsToKill);
@@ -33,7 +29,7 @@ public class GameRoundUI : MonoBehaviour
     }
     public void StartRoundButton()
     {
+        EventManager.OnRoundStarted();
         gameRoundPanel.SetActive(false);
-        gameController.OnRoundStarted?.Invoke();
     }
 }

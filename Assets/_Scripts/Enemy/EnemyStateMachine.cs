@@ -111,6 +111,15 @@ public class EnemyStateMachine : MonoBehaviour
     }
     public void ReleaseEnemy()
     {
+        if (enemyType == EnemyType.Angry)
+        {
+            EventManager.OnGoblinKilled();
+        }
+        else
+        {
+            EventManager.OnMushroomKilled();
+        }
+
         enemiesPool.Release(this);
     }
     public bool IsGrounded()

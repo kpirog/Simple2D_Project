@@ -18,7 +18,7 @@ public class Coin : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            coinController.onCoinCollected?.Invoke();
+            EventManager.OnCoinCollected();
             coinsPool.Release(this);
         }
         else if(collision.CompareTag("Obstacle"))

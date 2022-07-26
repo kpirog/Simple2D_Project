@@ -20,8 +20,6 @@ public class CoinController : MonoBehaviour
 
     private bool CanSpawnCoins => coinsPool.CountActive < maxCoinsAmount;
 
-    [HideInInspector] public UnityEvent onCoinCollected;
-
     private void Awake()
     {
         coinsPool = new ObjectPool<Coin>(CreateCoin, OnGetCoin, OnReleaseCoin);

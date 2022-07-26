@@ -14,11 +14,11 @@ public class CoinView : MonoBehaviour
     }
     private void OnEnable()
     {
-        coinController.onCoinCollected.AddListener(SetViewData);
+        EventManager.OnCoinCollect += SetViewData;
     }
     private void OnDisable()
     {
-        coinController.onCoinCollected.RemoveListener(SetViewData);
+        EventManager.OnCoinCollect -= SetViewData; 
     }
     private void SetViewData()
     {
