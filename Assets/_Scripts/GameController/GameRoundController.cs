@@ -15,6 +15,9 @@ public class GameRoundController : MonoBehaviour
     private int collectedGold = 0;
 
     public int CurrentRoundIndex => currentRoundIndex;
+    public int KilledMushrooms => killedMushrooms;
+    public int KilledGoblins => killedGoblins;
+    public int CollectedGold => collectedGold;
     public GameRoundData CurrentRoundData => roundDataList[currentRoundIndex];
     #endregion
 
@@ -90,10 +93,6 @@ public class GameRoundController : MonoBehaviour
             && collectedGold >= currentRoundGoal.GoldToCollect)
         {
             complete = true;
-        }
-        else
-        {
-            complete = false;
         }
 
         EventManager.OnRoundCompleted(complete);

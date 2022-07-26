@@ -9,6 +9,7 @@ public static class EventManager
     public static event Action OnGoblinKill;
     public static event Action OnMushroomKill;
     public static event Action OnCoinCollect;
+    public static event Action<int> OnHeartUpdate;
     
     public static void OnRoundScreenLoaded(GameRoundData roundData)
     {
@@ -33,6 +34,10 @@ public static class EventManager
     public static void OnCoinCollected()
     {
         OnCoinCollect?.Invoke();
+    }
+    public static void OnHeartUpdated(int currentHealth)
+    {
+        OnHeartUpdate?.Invoke(currentHealth);
     }
     #endregion
 }

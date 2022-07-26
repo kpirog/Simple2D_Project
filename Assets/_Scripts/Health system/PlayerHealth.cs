@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 3;
-    [SerializeField] private HealthView healthView;
     [SerializeField] private PlayerStateMachine playerStateMachine;
 
     private int currentHealth;
@@ -13,12 +12,12 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        healthView.onHealthUpdated?.Invoke(CurrentHealth);
+        EventManager.OnHeartUpdated(CurrentHealth);
     }
     public void TakeDamage()
     {
         currentHealth--;
-        healthView.onHealthUpdated?.Invoke(CurrentHealth);
+        EventManager.OnHeartUpdated(CurrentHealth);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
