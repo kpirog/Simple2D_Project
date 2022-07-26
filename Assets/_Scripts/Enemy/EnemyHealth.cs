@@ -15,6 +15,14 @@ public class EnemyHealth : MonoBehaviour
         anim = GetComponent<Animator>();
         ReviveEnemy();
     }
+    private void OnEnable()
+    {
+        EventManager.OnRoundStart += EventManager_OnRoundStart;
+    }
+    private void EventManager_OnRoundStart()
+    {
+        ReviveEnemy();
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerWeapon"))

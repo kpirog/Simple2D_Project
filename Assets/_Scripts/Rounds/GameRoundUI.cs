@@ -73,7 +73,7 @@ public class GameRoundUI : MonoBehaviour
     }
     private void SetRoundData(GameRoundData roundData)
     {
-        startRoundTitle.text = $"Round {GameRoundController.Instance.CurrentRoundIndex + 1}";
+        startRoundTitle.text = $"Round {gameRoundController.CurrentRoundIndex + 1}";
 
         roundObjectiveSlots[0].SetObjectiveText(roundData.MushroomsToKill);
         roundObjectiveSlots[1].SetObjectiveText(roundData.GoblinsToKill);
@@ -89,7 +89,7 @@ public class GameRoundUI : MonoBehaviour
         
         if (roundComplete)
         {
-            roundTitle = $"Round {gameRoundController.CurrentRoundIndex - 1} Completed!";
+            roundTitle = $"Round {gameRoundController.CurrentRoundIndex + 1} Completed!";
             roundContent = "Congratulations!";
             buttonText = "Start next round!";
         }
@@ -121,6 +121,6 @@ public class GameRoundUI : MonoBehaviour
     {
         ResetView();
         completeRoundPanel.SetActive(false);
-        EventManager.OnRoundStarted();
+        EventManager.OnStartRoundScreenLoaded(gameRoundController.CurrentRoundData);
     }
 }

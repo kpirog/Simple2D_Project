@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -114,5 +115,9 @@ public class CoinController : MonoBehaviour
         }
 
         return true;
+    }
+    private void OnDestroy()
+    {
+        coinsPool.Dispose();
     }
 }

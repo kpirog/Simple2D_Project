@@ -81,15 +81,22 @@ public class EnemyStateMachine : MonoBehaviour
     }
     private void OnEnable()
     {
+        EventManager.OnRoundStart += EventManager_OnRoundStart;
         EventManager.OnRoundComplete += EventManager_OnRoundComplete;
     }
     private void OnDisable()
     {
+        EventManager.OnRoundStart -= EventManager_OnRoundStart;
         EventManager.OnRoundComplete -= EventManager_OnRoundComplete;
+    }
+    private void EventManager_OnRoundStart()
+    {
+        enemiesPool.Release(this);
+        SwitchState(new EnemyIdleState(this));
     }
     private void EventManager_OnRoundComplete(bool obj)
     {
-        enemiesPool.Release(this);
+        anim.Rebind();
     }
     private void Update()
     {

@@ -17,5 +17,5 @@ MonoBehaviour:
   spawnRate: 20
   spawnDelay: 2
   mushroomsToKill: 4
-  goblinsToKill: 12
+  goblinsToKill: 5
   goldToCollect: 15

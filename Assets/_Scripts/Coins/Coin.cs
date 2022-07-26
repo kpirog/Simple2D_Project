@@ -3,21 +3,21 @@ using UnityEngine.Pool;
 
 public class Coin : MonoBehaviour
 {
-    private IObjectPool<Coin> coinsPool;
+    private ObjectPool<Coin> coinsPool;
 
     private void OnEnable()
     {
-        EventManager.OnRoundComplete += EventManager_OnRoundComplete;
+        EventManager.OnRoundStart += EventManager_OnRoundStart;
     }
     private void OnDisable()
     {
-        EventManager.OnRoundComplete -= EventManager_OnRoundComplete;
+        EventManager.OnRoundStart -= EventManager_OnRoundStart;
     }
-    private void EventManager_OnRoundComplete(bool obj)
+    private void EventManager_OnRoundStart()
     {
         coinsPool.Release(this);
     }
-    public void SetPool(IObjectPool<Coin> pool)
+    public void SetPool(ObjectPool<Coin> pool)
     {
         coinsPool = pool;
     }
@@ -26,6 +26,7 @@ public class Coin : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             EventManager.OnCoinCollected();
+
             coinsPool.Release(this);
         }
         else if (collision.CompareTag("Obstacle"))

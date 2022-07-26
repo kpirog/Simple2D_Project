@@ -94,4 +94,8 @@ public class EnemySpawner : MonoBehaviour
         this.timeToFirstSpawn = timeToFirstSpawn;
         this.spawnRate = spawnRate;
     }
+    private void OnDestroy()
+    {
+        enemiesPool.Dispose();
+    }
 }
