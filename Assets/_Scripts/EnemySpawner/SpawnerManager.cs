@@ -14,7 +14,7 @@ public class SpawnerManager : MonoBehaviour
             if (i == 0) { spawnDelay = 0f; }
             else { spawnDelay += roundData.SpawnDelay; }
 
-            spawners[i].gameObject.SetActive(true);
+            spawners[i].IsActive = true;
             spawners[i].SetRoundDataSettings(roundData.TimeToFirstSpawn + spawnDelay, roundData.SpawnRate + spawnDelay);
         }
     }

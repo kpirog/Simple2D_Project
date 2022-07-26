@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Events;
 
 public class CoinController : MonoBehaviour
 {
@@ -15,8 +14,8 @@ public class CoinController : MonoBehaviour
     [SerializeField] private float overlapCircleRadius;
 
     private ObjectPool<Coin> coinsPool;
-    public Collider2D[] obstaclesColliders;
-    private bool isActivated = true;
+    private Collider2D[] obstaclesColliders;
+    private bool isActivated = false;
 
     private bool CanSpawnCoins => coinsPool.CountActive < maxCoinsAmount;
 
@@ -24,9 +23,23 @@ public class CoinController : MonoBehaviour
     {
         coinsPool = new ObjectPool<Coin>(CreateCoin, OnGetCoin, OnReleaseCoin);
     }
-    private void Start()
+    private void OnEnable()
     {
-        InvokeRepeating(nameof(SpawnCoin), 0f, coinSpawnRate);
+        EventManager.OnRoundStart += EventManager_OnRoundStart;
+        EventManager.OnRoundComplete += EventManager_OnRoundComplete;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnRoundStart -= EventManager_OnRoundStart;
+        EventManager.OnRoundComplete -= EventManager_OnRoundComplete;
+    }
+    private void EventManager_OnRoundStart()
+    {
+        EnableSpawner();
+    }
+    private void EventManager_OnRoundComplete(bool complete)
+    {
+        DisableSpawner();
     }
     private Coin CreateCoin()
     {
@@ -34,17 +47,6 @@ public class CoinController : MonoBehaviour
         coin.SetPool(coinsPool);
 
         return coin;
-    }
-    private void Update()
-    {
-        if (CanSpawnCoins && !isActivated)
-        {
-            EnableSpawner();
-        }
-        else if (!CanSpawnCoins && isActivated)
-        {
-            DisableSpawner();
-        }
     }
     private void OnGetCoin(Coin coin)
     {

@@ -11,8 +11,22 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
-        EventManager.OnHeartUpdated(CurrentHealth);
+        RestoreFullHealth();
+    }
+    private void OnEnable()
+    {
+        EventManager.OnRoundStart += EventManager_OnRoundStart;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnRoundStart -= EventManager_OnRoundStart;
+    }
+    private void EventManager_OnRoundStart()
+    {
+        if (currentHealth < maxHealth)
+        {
+            RestoreFullHealth();
+        }
     }
     public void TakeDamage()
     {
@@ -25,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (enemy.CompareTag("Mushroom") || enemy.CompareTag("EnemyWeapon"))
         {
-            //TakeDamage();
+            TakeDamage();
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
@@ -51,5 +65,10 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         playerStateMachine.SetPlayerXConstraint(value);
+    }
+    public void RestoreFullHealth()
+    {
+        currentHealth = maxHealth;
+        EventManager.OnHeartUpdated(CurrentHealth);
     }
 }

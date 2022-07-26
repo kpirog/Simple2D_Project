@@ -16,6 +16,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private BasePlayerState currentState;
 
+    private bool isActive;
     private Vector2 movementDirection;
     public Vector2 MovementDirection => movementDirection;
 
@@ -55,6 +56,8 @@ public class PlayerStateMachine : MonoBehaviour
         moveAction.performed += ctx => movementDirection = ctx.ReadValue<Vector2>();
         moveAction.canceled += ctx => movementDirection = ctx.ReadValue<Vector2>();
         jumpAction.started += ctx => Jump();
+        EventManager.OnRoundStart += EventManager_OnRoundStart;
+        EventManager.OnRoundComplete += EventManager_OnRoundComplete;
     }
     private void OnDisable()
     {
@@ -66,6 +69,8 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void Update()
     {
+        if (!isActive) { return; }
+
         Move();
 
         currentState.UpdateState();
@@ -83,6 +88,18 @@ public class PlayerStateMachine : MonoBehaviour
 
         currentState = newState;
         currentState.EnterState();
+    }
+    private void EventManager_OnRoundStart()
+    {
+        isActive = true;
+        spriteRenderer.enabled = true;
+        SwitchState(new PlayerIdleState(this));
+    }
+    private void EventManager_OnRoundComplete(bool obj)
+    {
+        anim.Rebind();
+        isActive = false;
+        spriteRenderer.enabled = false;
     }
     private void Move()
     {
@@ -104,10 +121,6 @@ public class PlayerStateMachine : MonoBehaviour
         spriteRenderer.flipX = direction != 1 ? true : false;
 
         playerAttackController.SetColliderDirection(spriteRenderer.flipX);
-    }
-    public void DestroyPlayer()
-    {
-        Destroy(gameObject);
     }
     public void PushPlayerInDirection(Vector2 position)
     {

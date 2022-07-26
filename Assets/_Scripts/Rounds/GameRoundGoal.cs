@@ -1,4 +1,3 @@
-[System.Serializable]
 public class GameRoundGoal 
 {
     public int MushroomsToKill { get; }

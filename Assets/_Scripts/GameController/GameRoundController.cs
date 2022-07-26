@@ -6,6 +6,7 @@ public class GameRoundController : MonoBehaviour
 {
     [SerializeField] private List<GameRoundData> roundDataList;
     [SerializeField] private SpawnerManager spawnerManager;
+    [SerializeField] private PlayerStateMachine player;
 
     #region Round Variables
     private GameRoundGoal currentRoundGoal;
@@ -37,7 +38,7 @@ public class GameRoundController : MonoBehaviour
 
     private void Start()
     {
-        EventManager.OnRoundScreenLoaded(CurrentRoundData);
+        EventManager.OnStartRoundScreenLoaded(CurrentRoundData);
     }
     private void OnEnable()
     {
@@ -55,20 +56,16 @@ public class GameRoundController : MonoBehaviour
     }
     private void EventManager_OnRoundStart()
     {
-        Debug.Log("Round started!");
+        ResetCurrentRoundSettings();
+
         currentRoundGoal = new GameRoundGoal(CurrentRoundData.MushroomsToKill, CurrentRoundData.GoblinsToKill, CurrentRoundData.GoldToCollect);
         spawnerManager.SetRoundData(CurrentRoundData);
     }
     private void EventManager_OnRoundComplete(bool complete)
     {
-        if (complete)
-        {
-            Debug.Log("Round complete!");
-        }
-        else
-        {
-            Debug.Log("Round not complete!");
-        }
+        currentRoundIndex = complete ? currentRoundIndex++ : 0;
+
+        EventManager.OnCompleteRoundScreenLoaded(complete);
     }
     private void EventManager_OnMushroomKill()
     {
@@ -87,14 +84,19 @@ public class GameRoundController : MonoBehaviour
     }
     private void CheckIfRoundComplete()
     {
-        bool complete = false;
-        
-        if (killedMushrooms >= currentRoundGoal.MushroomsToKill && killedGoblins >= currentRoundGoal.GoblinsToKill
-            && collectedGold >= currentRoundGoal.GoldToCollect)
-        {
-            complete = true;
-        }
+        if (currentRoundGoal == null) { return; }
 
-        EventManager.OnRoundCompleted(complete);
+        if (player.IsAlive && (killedMushrooms >= currentRoundGoal.MushroomsToKill && killedGoblins >= currentRoundGoal.GoblinsToKill
+            && collectedGold >= currentRoundGoal.GoldToCollect))
+        {
+            EventManager.OnRoundCompleted(true);
+            currentRoundIndex++;
+        }
+    }
+    private void ResetCurrentRoundSettings()
+    {
+        killedMushrooms = 0;
+        killedGoblins = 0;
+        collectedGold = 0;
     }
 }

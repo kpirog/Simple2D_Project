@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeSpawnersCount: 1
   timeToFirstSpawn: 3
-  spawnRate: 15
+  spawnRate: 5
   spawnDelay: 2
-  mushroomsToKill: 2
-  goblinsToKill: 10
-  goldToCollect: 10
+  mushroomsToKill: 1
+  goblinsToKill: 1
+  goldToCollect: 1

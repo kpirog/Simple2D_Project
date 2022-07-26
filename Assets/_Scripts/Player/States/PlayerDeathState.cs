@@ -23,7 +23,7 @@ public class PlayerDeathState : BasePlayerState
     {
         if (playerStateMachine.anim.GetCurrentAnimatorStateInfo(0).IsName(DeathAnimationKey))
         {
-            playerStateMachine.DestroyPlayer();
+            EventManager.OnRoundCompleted(false);
         }
     }
 }

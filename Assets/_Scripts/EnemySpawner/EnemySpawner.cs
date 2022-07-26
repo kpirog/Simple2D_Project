@@ -12,14 +12,29 @@ public class EnemySpawner : MonoBehaviour
 
     private ObjectPool<EnemyStateMachine> enemiesPool;
     private EnemyStateMachine lastSpawnedEnemy;
+    public bool IsActive { get; set; } = false;
 
     private void Awake()
     {
         enemiesPool = new ObjectPool<EnemyStateMachine>(CreateEnemy, OnGetEnemy, OnReleaseEnemy);
     }
-    private void Start()
+    private void OnEnable()
     {
-        InvokeRepeating(nameof(SpawnEnemy), timeToFirstSpawn, spawnRate);
+        EventManager.OnRoundStart += EventManager_OnRoundStart;
+        EventManager.OnRoundComplete += EventManager_OnRoundComplete;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnRoundStart -= EventManager_OnRoundStart;
+        EventManager.OnRoundComplete -= EventManager_OnRoundComplete;
+    }
+    private void EventManager_OnRoundStart()
+    {
+        EnableSpawner();
+    }
+    private void EventManager_OnRoundComplete(bool obj)
+    {
+        DisableSpawner();
     }
     private EnemyStateMachine CreateEnemy()
     {
@@ -45,6 +60,16 @@ public class EnemySpawner : MonoBehaviour
     {
         enemy.anim.Rebind();
         enemy.gameObject.SetActive(false);
+    }
+    private void EnableSpawner()
+    {
+        if (IsActive)
+            InvokeRepeating(nameof(SpawnEnemy), timeToFirstSpawn, spawnRate);
+    }
+    private void DisableSpawner()
+    {
+        if (IsActive)
+            CancelInvoke();
     }
     private EnemyStateMachine SelectEnemyToSpawn(ref EnemyStateMachine enemy)
     {

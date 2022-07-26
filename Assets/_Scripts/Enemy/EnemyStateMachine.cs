@@ -47,7 +47,7 @@ public class EnemyStateMachine : MonoBehaviour
     {
         get
         {
-            return player.CurrentHealth > 0 &&
+            return player != null && player.CurrentHealth > 0 &&
                 Vector2.Distance(player.transform.position, transform.position) <= distanceToChase &&
                 Vector2.Distance(player.transform.position, transform.position) > distanceToAttack &&
                 enemyType == EnemyType.Angry;
@@ -57,7 +57,7 @@ public class EnemyStateMachine : MonoBehaviour
     {
         get
         {
-            return player.CurrentHealth > 0 &&
+            return player != null && player.CurrentHealth > 0 &&
                 Vector2.Distance(player.transform.position, transform.position) <= distanceToAttack &&
                 enemyType == EnemyType.Angry;
         }
@@ -78,6 +78,18 @@ public class EnemyStateMachine : MonoBehaviour
     private void Start()
     {
         SwitchState(new EnemyIdleState(this));
+    }
+    private void OnEnable()
+    {
+        EventManager.OnRoundComplete += EventManager_OnRoundComplete;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnRoundComplete -= EventManager_OnRoundComplete;
+    }
+    private void EventManager_OnRoundComplete(bool obj)
+    {
+        enemiesPool.Release(this);
     }
     private void Update()
     {
