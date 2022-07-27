@@ -16,7 +16,6 @@ public class CoinController : MonoBehaviour
 
     private ObjectPool<Coin> coinsPool;
     private Collider2D[] obstaclesColliders;
-    private bool isActivated = false;
 
     private bool CanSpawnCoins => coinsPool.CountActive < maxCoinsAmount;
 
@@ -84,12 +83,10 @@ public class CoinController : MonoBehaviour
     }
     private void EnableSpawner()
     {
-        isActivated = true;
         InvokeRepeating(nameof(SpawnCoin), coinSpawnRate, coinSpawnRate);
     }
     private void DisableSpawner()
     {
-        isActivated = false;
         CancelInvoke();
     }
     private bool PreventSpawnOverlap(Vector3 spawnPos)

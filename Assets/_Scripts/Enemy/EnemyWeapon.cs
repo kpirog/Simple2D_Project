@@ -14,7 +14,6 @@ public class EnemyWeapon : MonoBehaviour
 
         if (hit)
         {
-            Debug.Log(hit.transform.name);
             EventManager.OnPlayerHit();
         }
     }

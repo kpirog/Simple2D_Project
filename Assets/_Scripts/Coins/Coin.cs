@@ -5,8 +5,11 @@ public class Coin : MonoBehaviour
 {
     private ObjectPool<Coin> coinsPool;
 
+    private bool isCollected;
+
     private void OnEnable()
     {
+        isCollected = false;
         EventManager.OnRoundStart += EventManager_OnRoundStart;
     }
     private void OnDisable()
@@ -15,7 +18,7 @@ public class Coin : MonoBehaviour
     }
     private void EventManager_OnRoundStart()
     {
-        //coinsPool.Release(this);
+        coinsPool.Release(this);
     }
     public void SetPool(ObjectPool<Coin> pool)
     {
@@ -23,11 +26,13 @@ public class Coin : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !isCollected)
         {
             EventManager.OnCoinCollected();
 
             coinsPool.Release(this);
+
+            isCollected = true;
         }
         else if (collision.CompareTag("Obstacle"))
         {

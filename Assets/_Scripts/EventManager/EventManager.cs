@@ -46,10 +46,12 @@ public static class EventManager
     }
     #endregion
 
+    #region Gameplay Events
     public static event Action OnPlayerHitEvent;
 
     public static void OnPlayerHit()
     {
         OnPlayerHitEvent?.Invoke();
     }
+    #endregion
 }
