@@ -148,7 +148,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -156,7 +156,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 5
+  m_Constraints: 4
 --- !u!195 &1679726547981548427
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -192,7 +192,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolRange: {x: -8, y: 8}
-  patrolRate: 5
+  minPatrolTimer: 1
+  maxPatrolTimer: 10
   minPatrolDistance: 1
   distanceToChase: 0
   distanceToAttack: 0

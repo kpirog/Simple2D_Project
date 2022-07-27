@@ -15,7 +15,7 @@ public class Coin : MonoBehaviour
     }
     private void EventManager_OnRoundStart()
     {
-        coinsPool.Release(this);
+        //coinsPool.Release(this);
     }
     public void SetPool(ObjectPool<Coin> pool)
     {

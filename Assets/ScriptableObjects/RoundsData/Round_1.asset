@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Round_1
   m_EditorClassIdentifier: 
   activeSpawnersCount: 1
-  timeToFirstSpawn: 3
-  spawnRate: 5
+  timeToFirstSpawn: 1
+  spawnRate: 10
   spawnDelay: 2
-  mushroomsToKill: 1
-  goblinsToKill: 1
-  goldToCollect: 1
+  mushroomsToKill: 5
+  goblinsToKill: 5
+  goldToCollect: 5

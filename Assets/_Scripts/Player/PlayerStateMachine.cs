@@ -137,15 +137,4 @@ public class PlayerStateMachine : MonoBehaviour
 
         rb.AddForce(direction * pushForce, ForceMode2D.Impulse);
     }
-    public void SetPlayerXConstraint(bool enable)
-    {
-        if (enable)
-        {
-            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-        }
-        else
-        {
-            rb.constraints = RigidbodyConstraints2D.None | RigidbodyConstraints2D.FreezeRotation;
-        }
-    }
 }

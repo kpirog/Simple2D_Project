@@ -45,4 +45,11 @@ public static class EventManager
         OnHeartUpdate?.Invoke(currentHealth);
     }
     #endregion
+
+    public static event Action OnPlayerHitEvent;
+
+    public static void OnPlayerHit()
+    {
+        OnPlayerHitEvent?.Invoke();
+    }
 }

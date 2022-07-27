@@ -11,7 +11,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void EnterState()
     {
-        patrolTimer = enemyStateMachine.PatrolRate;
+        patrolTimer = Random.Range(enemyStateMachine.MinPatrolTimer, enemyStateMachine.MaxPatrolTimer);
         enemyStateMachine.CanPatrol = false;
     }
 

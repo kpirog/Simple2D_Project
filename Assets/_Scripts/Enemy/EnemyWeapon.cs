@@ -2,31 +2,24 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour
 {
-    [SerializeField] private BoxCollider2D weaponCollider;
+    [SerializeField] private float raycastDistance;
+    [SerializeField] private LayerMask playerLayerMask;
 
-    public void EnableWeaponCollider()
+    private Vector2 raycastDirection;
+    public void EnableWeaponRaycast()
     {
-        if(!weaponCollider.enabled)
-            weaponCollider.enabled = true;
-    }
-    public void DisableWeaponCollider()
-    {
-        if (weaponCollider.enabled)
-            weaponCollider.enabled = false;
-    }
-    public void SetColliderDirection(bool isLeft)
-    {
-        Vector3 colliderPos = weaponCollider.offset;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, raycastDirection, raycastDistance, playerLayerMask);
 
-        if ((isLeft && colliderPos.x > 0f) || (!isLeft && colliderPos.x < 0f))
+        Debug.DrawRay(transform.position, raycastDirection * raycastDistance, Color.red);
+
+        if (hit)
         {
-            colliderPos.x *= -1f;
+            Debug.Log(hit.transform.name);
+            EventManager.OnPlayerHit();
         }
-        else
-        {
-            return;
-        }
-
-        weaponCollider.offset = colliderPos;
+    }
+    public void SetRaycastDirection(bool isLeft)
+    {
+        raycastDirection = isLeft ? Vector2.left : Vector2.right;
     }
 }

@@ -6,7 +6,8 @@ public class EnemyStateMachine : MonoBehaviour
 {
     [Header("Patrol settings")]
     [SerializeField] private Vector2 patrolRange;
-    [SerializeField] private float patrolRate;
+    [SerializeField] private float minPatrolTimer;
+    [SerializeField] private float maxPatrolTimer;
     [SerializeField] private float minPatrolDistance = 1.0f;
 
     [Header("Chase settings")]
@@ -37,7 +38,8 @@ public class EnemyStateMachine : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
 
     public EnemyType EnemyType => enemyType;
-    public float PatrolRate => patrolRate;
+    public float MinPatrolTimer => minPatrolTimer;
+    public float MaxPatrolTimer => maxPatrolTimer;
     public float MinPatrolDistance => minPatrolDistance;
     public Vector2 PatrolRange => patrolRange;
     public Vector3 PlayerPosition => player.transform.position;
@@ -100,11 +102,6 @@ public class EnemyStateMachine : MonoBehaviour
     }
     private void Update()
     {
-        if (enemyType == EnemyType.Angry && currentState is not EnemyAttackState)
-        {
-            enemyWeapon.DisableWeaponCollider();
-        }
-
         currentState.UpdateState();
     }
     private void OnDestroy()
@@ -126,7 +123,7 @@ public class EnemyStateMachine : MonoBehaviour
         spriteRenderer.flipX = direction < 0f ? true : false;
 
         if (enemyWeapon != null)
-            enemyWeapon.SetColliderDirection(spriteRenderer.flipX);
+            enemyWeapon.SetRaycastDirection(spriteRenderer.flipX);
     }
     public void ReleaseEnemy()
     {

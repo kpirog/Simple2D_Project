@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyPatrolState : EnemyBaseState
 {
-    private Vector2 patrolDestination;
+    private Vector3 patrolDestination;
     private int walkingAnimKey = Animator.StringToHash("IsWalking");
 
     public EnemyPatrolState(EnemyStateMachine enemyStateMachine) : base(enemyStateMachine)
@@ -16,7 +16,7 @@ public class EnemyPatrolState : EnemyBaseState
         
         enemyStateMachine.anim.SetBool(walkingAnimKey, true);
 
-        patrolDestination = new Vector2(GetRandomPatrolXPos(), enemyStateMachine.rb.velocity.y);
+        patrolDestination = new Vector3(GetRandomPatrolXPos(), enemyStateMachine.rb.velocity.y, 0f);
     }
     public override void ExitState()
     {

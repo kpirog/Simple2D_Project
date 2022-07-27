@@ -51,9 +51,9 @@ public class EnemySpawner : MonoBehaviour
     }
     private void OnGetEnemy(EnemyStateMachine enemy)
     {
+        enemy.transform.position = transform.position;
         enemy.enemyHealth.ReviveEnemy();
         enemy.SwitchState(new EnemyIdleState(enemy));
-        enemy.transform.position = transform.position;
         enemy.gameObject.SetActive(true);
     }
     private void OnReleaseEnemy(EnemyStateMachine enemy)
