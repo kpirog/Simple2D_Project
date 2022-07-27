@@ -53,6 +53,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThrowShuriken"",
+                    ""type"": ""Button"",
+                    ""id"": ""22c21c94-72d3-450c-860e-360ac733a77c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -110,6 +119,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4126df4e-8adf-4f64-9b78-ce544eb86727"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ThrowShuriken"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -144,6 +164,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
+        m_Gameplay_ThrowShuriken = m_Gameplay.FindAction("ThrowShuriken", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -206,6 +227,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Attack;
+    private readonly InputAction m_Gameplay_ThrowShuriken;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -213,6 +235,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
+        public InputAction @ThrowShuriken => m_Wrapper.m_Gameplay_ThrowShuriken;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -231,6 +254,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Attack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
+                @ThrowShuriken.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnThrowShuriken;
+                @ThrowShuriken.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnThrowShuriken;
+                @ThrowShuriken.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnThrowShuriken;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -244,6 +270,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @ThrowShuriken.started += instance.OnThrowShuriken;
+                @ThrowShuriken.performed += instance.OnThrowShuriken;
+                @ThrowShuriken.canceled += instance.OnThrowShuriken;
             }
         }
     }
@@ -271,5 +300,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnThrowShuriken(InputAction.CallbackContext context);
     }
 }

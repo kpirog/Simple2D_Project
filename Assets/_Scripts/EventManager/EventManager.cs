@@ -48,10 +48,19 @@ public static class EventManager
 
     #region Gameplay Events
     public static event Action OnPlayerHitEvent;
-
+    public static event Action OnGetShurikenEvent;
+    public static event Action OnThrowShurikenEvent;
     public static void OnPlayerHit()
     {
         OnPlayerHitEvent?.Invoke();
+    }
+    public static void OnGetShuriken()
+    {
+        OnGetShurikenEvent?.Invoke();
+    }
+    public static void OnThrowShuriken()
+    {
+        OnThrowShurikenEvent?.Invoke();
     }
     #endregion
 }

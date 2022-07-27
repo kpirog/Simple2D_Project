@@ -4,10 +4,13 @@ public class PlayerAttackController : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D weaponCollider;
 
+    private Shuriken shuriken;
     private int attackAnimationKey = Animator.StringToHash("Attack");
 
     private Animator anim;
     private PlayerControls playerControls;
+
+    public bool HasAlreadyShuriken => shuriken != null;
 
     private void Awake()
     {
@@ -18,10 +21,12 @@ public class PlayerAttackController : MonoBehaviour
     {
         playerControls.Enable();
         playerControls.Gameplay.Attack.started += ctx => Attack();
+        playerControls.Gameplay.ThrowShuriken.started += ctx => ThrowShuriken();
     }
     private void OnDisable()
     {
         playerControls.Gameplay.Attack.started -= ctx => Attack();
+        playerControls.Gameplay.ThrowShuriken.started -= ctx => ThrowShuriken();
         playerControls.Disable();
     }
     private void Attack()
@@ -50,5 +55,17 @@ public class PlayerAttackController : MonoBehaviour
         }
 
         weaponCollider.offset = colliderPos;
+    }
+    public void SetShuriken(Shuriken shuriken)
+    {
+        this.shuriken = shuriken;
+    }
+    public void ThrowShuriken()
+    {
+        if (shuriken != null)
+        {
+            shuriken.Throw();
+            shuriken = null;
+        }
     }
 }

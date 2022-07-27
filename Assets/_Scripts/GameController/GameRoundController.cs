@@ -56,6 +56,8 @@ public class GameRoundController : MonoBehaviour
     }
     private void EventManager_OnRoundStart()
     {
+        Cursor.visible = false;
+        
         ResetCurrentRoundSettings();
 
         currentRoundGoal = new GameRoundGoal(CurrentRoundData.MushroomsToKill, CurrentRoundData.GoblinsToKill, CurrentRoundData.GoldToCollect);
@@ -63,6 +65,8 @@ public class GameRoundController : MonoBehaviour
     }
     private void EventManager_OnRoundComplete(bool complete)
     {
+        Cursor.visible = true;
+
         currentRoundIndex = complete ? currentRoundIndex++ : 0;
 
         EventManager.OnCompleteRoundScreenLoaded(complete);
