@@ -52,7 +52,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
-        moveAction.started += ctx => SetSpriteDirection(ctx.ReadValue<Vector2>().x);
+        moveAction.performed += ctx => SetSpriteDirection(ctx.ReadValue<Vector2>().x);
         moveAction.performed += ctx => movementDirection = ctx.ReadValue<Vector2>();
         moveAction.canceled += ctx => movementDirection = ctx.ReadValue<Vector2>();
         jumpAction.started += ctx => Jump();
@@ -62,7 +62,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnDisable()
     {
         playerControls.Disable();
-        moveAction.started -= ctx => SetSpriteDirection(ctx.ReadValue<Vector2>().x);
+        moveAction.performed -= ctx => SetSpriteDirection(ctx.ReadValue<Vector2>().x);
         moveAction.performed -= ctx => movementDirection = ctx.ReadValue<Vector2>();
         moveAction.canceled -= ctx => movementDirection = ctx.ReadValue<Vector2>();
         jumpAction.started -= ctx => Jump();
@@ -103,6 +103,8 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void Move()
     {
+        movementDirection.y = 0f;
+
         transform.Translate(movementDirection * movementSpeed * Time.deltaTime);
     }
     private void Jump()
@@ -118,7 +120,9 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void SetSpriteDirection(float direction)
     {
-        spriteRenderer.flipX = direction != 1 ? true : false;
+        Debug.Log("Sprite direction = " + direction);
+        
+        spriteRenderer.flipX = direction < 0f ? true : false;
 
         playerAttackController.SetColliderDirection(spriteRenderer.flipX);
     }

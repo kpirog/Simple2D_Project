@@ -62,6 +62,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MovePointer"",
+                    ""type"": ""Value"",
+                    ""id"": ""c34db932-323c-441f-a88a-08a1e440387d"",
+                    ""expectedControlType"": ""Stick"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -100,11 +109,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a4b2c27e-9356-45e8-9695-1169e82972f5"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": ""NormalizeVector2"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""65dda5ba-57e9-4de6-b739-9d0a8672557c"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ab9715b5-5fd1-4afe-97af-b6296962ed72"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -122,12 +153,45 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""09215d8d-c02c-4f0c-8c22-fa41c8d77ad3"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4126df4e-8adf-4f64-9b78-ce544eb86727"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""ThrowShuriken"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdc1ce79-2c3a-4f71-8111-4111ef285dbc"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ThrowShuriken"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3dd2b5f1-59e3-4aff-a0c0-6aa1646cdf94"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MovePointer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -165,6 +229,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_ThrowShuriken = m_Gameplay.FindAction("ThrowShuriken", throwIfNotFound: true);
+        m_Gameplay_MovePointer = m_Gameplay.FindAction("MovePointer", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -228,6 +293,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_ThrowShuriken;
+    private readonly InputAction m_Gameplay_MovePointer;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -236,6 +302,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @ThrowShuriken => m_Wrapper.m_Gameplay_ThrowShuriken;
+        public InputAction @MovePointer => m_Wrapper.m_Gameplay_MovePointer;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -257,6 +324,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ThrowShuriken.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnThrowShuriken;
                 @ThrowShuriken.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnThrowShuriken;
                 @ThrowShuriken.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnThrowShuriken;
+                @MovePointer.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovePointer;
+                @MovePointer.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovePointer;
+                @MovePointer.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovePointer;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -273,6 +343,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ThrowShuriken.started += instance.OnThrowShuriken;
                 @ThrowShuriken.performed += instance.OnThrowShuriken;
                 @ThrowShuriken.canceled += instance.OnThrowShuriken;
+                @MovePointer.started += instance.OnMovePointer;
+                @MovePointer.performed += instance.OnMovePointer;
+                @MovePointer.canceled += instance.OnMovePointer;
             }
         }
     }
@@ -301,5 +374,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnThrowShuriken(InputAction.CallbackContext context);
+        void OnMovePointer(InputAction.CallbackContext context);
     }
 }
