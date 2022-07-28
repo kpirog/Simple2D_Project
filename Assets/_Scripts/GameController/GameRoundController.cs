@@ -8,6 +8,10 @@ public class GameRoundController : MonoBehaviour
     [SerializeField] private SpawnerManager spawnerManager;
     [SerializeField] private PlayerStateMachine player;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip winClip;
+    [SerializeField] private AudioClip lostClip;
+
     #region Round Variables
     private GameRoundGoal currentRoundGoal;
     private int currentRoundIndex = 0;
@@ -67,6 +71,7 @@ public class GameRoundController : MonoBehaviour
     {
         Cursor.visible = true;
 
+        AudioSystem.PlaySFX_Global(complete ? winClip : lostClip);
         currentRoundIndex = complete ? currentRoundIndex++ : 0;
 
         EventManager.OnCompleteRoundScreenLoaded(complete);

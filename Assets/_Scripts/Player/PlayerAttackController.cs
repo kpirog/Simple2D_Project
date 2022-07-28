@@ -4,6 +4,9 @@ public class PlayerAttackController : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D weaponCollider;
 
+    [SerializeField] private AudioClip swordAttackClip;
+    [SerializeField] private AudioClip shurikenClip;
+
     private Shuriken shuriken;
     private int attackAnimationKey = Animator.StringToHash("Attack");
 
@@ -32,6 +35,7 @@ public class PlayerAttackController : MonoBehaviour
     private void Attack()
     {
         anim.SetTrigger(attackAnimationKey);
+        AudioSystem.PlaySFX_Global(swordAttackClip);
     }
     public void EnableWeaponCollider()
     {
@@ -66,6 +70,7 @@ public class PlayerAttackController : MonoBehaviour
         {
             shuriken.Throw();
             shuriken = null;
+            AudioSystem.PlaySFX_Global(shurikenClip);
         }
     }
 }

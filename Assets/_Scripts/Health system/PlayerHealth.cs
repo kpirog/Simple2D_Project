@@ -5,6 +5,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int maxHealth = 3;
     [SerializeField] private PlayerStateMachine playerStateMachine;
 
+    [SerializeField] private AudioClip getHitClip;
+
     private int currentHealth;
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
@@ -33,6 +35,8 @@ public class PlayerHealth : MonoBehaviour
     private void TakeDamage()
     {
         currentHealth--;
+
+        AudioSystem.PlaySFX_Global(getHitClip);
         EventManager.OnHeartUpdated(CurrentHealth);
     }
     private void OnCollisionEnter2D(Collision2D collision)

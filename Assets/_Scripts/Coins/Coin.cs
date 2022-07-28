@@ -3,13 +3,12 @@ using UnityEngine.Pool;
 
 public class Coin : MonoBehaviour
 {
-    private ObjectPool<Coin> coinsPool;
+    [SerializeField] private AudioClip coinClip;
 
-    private bool isCollected;
+    private ObjectPool<Coin> coinsPool;
 
     private void OnEnable()
     {
-        isCollected = false;
         EventManager.OnRoundStart += EventManager_OnRoundStart;
     }
     private void OnDisable()
@@ -26,13 +25,13 @@ public class Coin : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !isCollected)
+        if (collision.CompareTag("Player"))
         {
+            AudioSystem.PlaySFX_Global(coinClip);
+            
             EventManager.OnCoinCollected();
 
             coinsPool.Release(this);
-
-            isCollected = true;
         }
         else if (collision.CompareTag("Obstacle"))
         {

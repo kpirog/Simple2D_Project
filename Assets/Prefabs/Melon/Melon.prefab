@@ -125,3 +125,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthRegenModifier: 1
+  eatingClip: {fileID: 8300000, guid: 3b2c66eb193223a4986a780267a07858, type: 3}

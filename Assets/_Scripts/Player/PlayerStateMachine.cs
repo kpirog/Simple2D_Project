@@ -14,6 +14,9 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private Vector3 rightRayPosition;
     [SerializeField] private LayerMask groundLayerMask;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip jumpClip;
+
     private BasePlayerState currentState;
 
     private bool isActive;
@@ -111,6 +114,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         if (!IsGrounded()) { return; }
 
+        AudioSystem.PlaySFX_Global(jumpClip);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
     public bool IsGrounded()

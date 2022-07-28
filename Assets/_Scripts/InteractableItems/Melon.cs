@@ -3,6 +3,7 @@ using UnityEngine;
 public class Melon : ItemBase
 {
     [SerializeField] private int healthRegenModifier = 1;
+    [SerializeField] private AudioClip eatingClip;
 
     private PlayerHealth playerHealth;
 
@@ -17,6 +18,7 @@ public class Melon : ItemBase
             return;
         }
 
+        AudioSystem.PlaySFX_Global(eatingClip);
         playerHealth.AddHealth(healthRegenModifier);
         Destroy(gameObject);
     }
