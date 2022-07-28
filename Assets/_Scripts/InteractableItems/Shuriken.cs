@@ -16,6 +16,16 @@ public class Shuriken : ItemBase
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+    private void OnEnable()
+    {
+        EventManager.OnGetShurikenEvent += EventManager_OnGetShurikenEvent;
+        EventManager.OnThrowShurikenEvent += EventManager_OnThrowShurikenEvent; 
+    }
+    private void OnDisable()
+    {
+        EventManager.OnGetShurikenEvent -= EventManager_OnGetShurikenEvent;
+        EventManager.OnThrowShurikenEvent -= EventManager_OnThrowShurikenEvent;
+    }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (player.HasAlreadyShuriken) { return; }
@@ -28,6 +38,14 @@ public class Shuriken : ItemBase
         {
             Destroy(gameObject);
         }
+    }
+    private void EventManager_OnGetShurikenEvent()
+    {
+        rb.simulated = false;
+    }
+    private void EventManager_OnThrowShurikenEvent()
+    {
+        rb.simulated = true;
     }
     protected override void GetItem()
     {

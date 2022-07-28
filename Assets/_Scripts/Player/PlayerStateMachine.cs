@@ -120,10 +120,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void SetSpriteDirection(float direction)
     {
-        Debug.Log("Sprite direction = " + direction);
-        
         spriteRenderer.flipX = direction < 0f ? true : false;
-
         playerAttackController.SetColliderDirection(spriteRenderer.flipX);
     }
     public void PushPlayerInDirection(Vector2 position)
