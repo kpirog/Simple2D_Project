@@ -11,8 +11,6 @@ public class EnemyDrop : MonoBehaviour
     public void TryDropItem()
     {
         bool canDrop = Random.Range(0f, 100f) <= dropProbability;
-
-        Debug.Log(canDrop);
         
         if (canDrop)
         {

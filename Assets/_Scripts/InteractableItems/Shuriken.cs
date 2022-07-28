@@ -17,13 +17,15 @@ public class Shuriken : ItemBase
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         EventManager.OnGetShurikenEvent += EventManager_OnGetShurikenEvent;
         EventManager.OnThrowShurikenEvent += EventManager_OnThrowShurikenEvent; 
     }
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         EventManager.OnGetShurikenEvent -= EventManager_OnGetShurikenEvent;
         EventManager.OnThrowShurikenEvent -= EventManager_OnThrowShurikenEvent;
     }

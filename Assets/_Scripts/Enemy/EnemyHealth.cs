@@ -29,6 +29,10 @@ public class EnemyHealth : MonoBehaviour
         {
             TakeDamage();
         }
+        else if(collision.gameObject.CompareTag("Shuriken"))
+        {
+            InstantKill();
+        }
     }
     public void TakeDamage()
     {
@@ -41,5 +45,10 @@ public class EnemyHealth : MonoBehaviour
     public void ReviveEnemy()
     {
         currentHealth = maxHealth;
+    }
+    private void InstantKill()
+    {
+        currentHealth = 1;
+        TakeDamage();
     }
 }
