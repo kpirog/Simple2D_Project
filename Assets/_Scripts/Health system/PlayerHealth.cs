@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
 
     private int currentHealth;
     public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
 
     private void Start()
     {
@@ -15,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
     private void OnEnable()
     {
         EventManager.OnRoundStart += EventManager_OnRoundStart;
-        EventManager.OnPlayerHitEvent += TakeDamage;
+        EventManager.OnPlayerHitEvent += TakeDamage;;
     }
     private void OnDisable()
     {
@@ -53,6 +54,17 @@ public class PlayerHealth : MonoBehaviour
     public void RestoreFullHealth()
     {
         currentHealth = maxHealth;
+        EventManager.OnHeartUpdated(CurrentHealth);
+    }
+    public void AddHealth(int value)
+    {
+        currentHealth += value;
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
         EventManager.OnHeartUpdated(CurrentHealth);
     }
 }
