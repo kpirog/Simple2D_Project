@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Shuriken : ItemBase
 {
+    [SerializeField] private CircleCollider2D collisionCollider;
     [SerializeField] private float throwSpeed = 10f;
 
     private bool canDestroy = false;
@@ -82,6 +83,8 @@ public class Shuriken : ItemBase
     {
         rb.bodyType = isPickedUp ? RigidbodyType2D.Static : RigidbodyType2D.Dynamic;
         rb.simulated = !isPickedUp;
+
+        collisionCollider.enabled = !isPickedUp;
 
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Shuriken"), !isPickedUp);
     }

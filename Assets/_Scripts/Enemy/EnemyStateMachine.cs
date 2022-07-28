@@ -33,6 +33,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     [HideInInspector] public EnemyHealth enemyHealth;
     [HideInInspector] public EnemyWeapon enemyWeapon;
+    [HideInInspector] public EnemyDrop enemyDrop;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Animator anim;
     [HideInInspector] public Rigidbody2D rb;
@@ -72,6 +73,7 @@ public class EnemyStateMachine : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyHealth = GetComponent<EnemyHealth>();
         enemyWeapon = GetComponent<EnemyWeapon>();
+        enemyDrop = GetComponent<EnemyDrop>();
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody2D>();
         agent.updateRotation = false;
@@ -136,6 +138,7 @@ public class EnemyStateMachine : MonoBehaviour
             EventManager.OnMushroomKilled();
         }
 
+        enemyDrop.TryDropItem();
         enemiesPool.Release(this);
     }
     public bool IsGrounded()

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5168922476644722375}
   - component: {fileID: 5168922476644722374}
   - component: {fileID: 4964626757789423600}
+  - component: {fileID: 8503541954512711936}
   m_Layer: 8
   m_Name: Goblin
   m_TagString: Goblin
@@ -207,6 +208,7 @@ MonoBehaviour:
   enemyType: 0
   enemyHealth: {fileID: 0}
   enemyWeapon: {fileID: 0}
+  enemyDrop: {fileID: 0}
   agent: {fileID: 0}
   anim: {fileID: 0}
   rb: {fileID: 0}
@@ -239,3 +241,19 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &8503541954512711936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5168922476644722369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9687d3b387b8d1b4c9e0e9c2f525db38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 5212453652591949451, guid: 7b08a12aa19560b45b47a2487a74400a, type: 3}
+  - {fileID: 2590199462815069427, guid: de66fc905aac86c43a456a7fb17d5735, type: 3}
+  dropProbability: 50
