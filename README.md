@@ -1,4 +1,4 @@
-# Blum-Entertainment
+# Opis projektu
 
 Rozgrywka:
 Gra składa się z czterech rund. 
