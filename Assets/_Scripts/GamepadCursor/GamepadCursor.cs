@@ -9,11 +9,20 @@ public class GamepadCursor : MonoBehaviour
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private float cursorSpeed = 1000f;
+    [SerializeField] private float padding = 35f;
 
     private Mouse virtualMouse;
+    private Mouse currentMouse;
+
+    private string previousControlScheme = "";
+
+    private const string gamepadControlScheme = "Gamepad";
+    private const string mouseControlScheme = "Keyboard&Mouse";
 
     private void OnEnable()
     {
+        currentMouse = Mouse.current;
+
         if (virtualMouse == null)
         {
             virtualMouse = InputSystem.AddDevice<Mouse>("VirtualMouse");
@@ -29,10 +38,28 @@ public class GamepadCursor : MonoBehaviour
         InputState.Change(virtualMouse.position, cursorPosition);
 
         InputSystem.onAfterUpdate += UpdateMotion;
+        playerInput.onControlsChanged += OnControlsChanged;
     }
     private void OnDisable()
     {
+        if (virtualMouse != null && virtualMouse.added) { InputSystem.RemoveDevice(virtualMouse); }
         InputSystem.onAfterUpdate -= UpdateMotion;
+        playerInput.onControlsChanged -= OnControlsChanged;
+    }
+    private void OnControlsChanged(PlayerInput input)
+    {
+        if (input.currentControlScheme == gamepadControlScheme && previousControlScheme != gamepadControlScheme)
+        {
+            InputState.Change(virtualMouse.position, currentMouse.position.ReadValue());
+            previousControlScheme = gamepadControlScheme;
+            SetCursorPosition(currentMouse.position.ReadValue());
+        }
+        else if (input.currentControlScheme == mouseControlScheme && previousControlScheme != mouseControlScheme)
+        {
+            currentMouse.WarpCursorPosition(virtualMouse.position.ReadValue());
+            previousControlScheme = mouseControlScheme;
+            SetCursorPosition(currentMouse.position.ReadValue());
+        }
     }
     private void UpdateMotion()
     {
@@ -41,19 +68,29 @@ public class GamepadCursor : MonoBehaviour
             return;
         }
 
-        Vector2 stickDelta = Gamepad.current.rightStick.ReadValue();
-        stickDelta *= cursorSpeed * Time.deltaTime;
+        Vector2 motionPosition;
 
-        Vector2 currentPosition = virtualMouse.position.ReadValue();
-        Vector2 newPosition = currentPosition + stickDelta;
+        if (playerInput.currentControlScheme == gamepadControlScheme)
+        {
+            Vector2 stickDelta = Gamepad.current.rightStick.ReadValue();
+            stickDelta *= cursorSpeed * Time.deltaTime;
 
-        newPosition.x = Mathf.Clamp(newPosition.x, 0f, Screen.width);
-        newPosition.y = Mathf.Clamp(newPosition.y, 0f, Screen.height);
+            Vector2 currentPosition = virtualMouse.position.ReadValue();
+            motionPosition = currentPosition + stickDelta;
 
-        InputState.Change(virtualMouse.position, newPosition);
-        InputState.Change(virtualMouse.delta, stickDelta);
+            ClampVector(ref motionPosition);
 
-        SetCursorPosition(newPosition);
+            InputState.Change(virtualMouse.position, motionPosition);
+            InputState.Change(virtualMouse.delta, stickDelta);
+        }
+        else
+        {
+            motionPosition = currentMouse.position.ReadValue();
+
+            ClampVector(ref motionPosition);
+        }
+
+        SetCursorPosition(motionPosition);
     }
     private void SetCursorPosition(Vector2 newPosition)
     {
@@ -61,5 +98,10 @@ public class GamepadCursor : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, newPosition, null, out anchoredPosition);
 
         cursorRectTransform.anchoredPosition = anchoredPosition;
+    }
+    private void ClampVector(ref Vector2 vector)
+    {
+        vector.x = Mathf.Clamp(vector.x, padding, Screen.width - padding);
+        vector.y = Mathf.Clamp(vector.y, padding, Screen.height - padding);
     }
 }
