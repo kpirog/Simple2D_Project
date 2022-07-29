@@ -8867,7 +8867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1999268114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94, y: 3.05, z: 0}
+  m_LocalPosition: {x: 3.5, y: 3, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8888,7 +8888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 8
-  jumpForce: 8
+  jumpForce: 250
   pushForce: 1
   groundCheckDistance: -0.5
   leftRayPosition: {x: 0.26, y: 0, z: 0}
@@ -8897,6 +8897,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   jumpClip: {fileID: 8300000, guid: 2bae4e0e658d61d459a54c494266fe02, type: 3}
+  spawnPosition: {x: 3.5, y: 3}
   anim: {fileID: 0}
 --- !u!50 &1999268119
 Rigidbody2D:
@@ -8910,7 +8911,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 30
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1

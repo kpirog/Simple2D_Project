@@ -17,6 +17,9 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip jumpClip;
 
+    [Header("Spawn")]
+    [SerializeField] private Vector2 spawnPosition;
+
     private BasePlayerState currentState;
 
     private bool isActive;
@@ -55,6 +58,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
+        playerControls.Gameplay.Disable();
         moveAction.performed += ctx => SetSpriteDirection(ctx.ReadValue<Vector2>().x);
         moveAction.performed += ctx => movementDirection = ctx.ReadValue<Vector2>();
         moveAction.canceled += ctx => movementDirection = ctx.ReadValue<Vector2>();
@@ -94,12 +98,15 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private void EventManager_OnRoundStart()
     {
+        transform.position = spawnPosition;
+        playerControls.Gameplay.Enable();
         isActive = true;
         spriteRenderer.enabled = true;
         SwitchState(new PlayerIdleState(this));
     }
     private void EventManager_OnRoundComplete(bool obj)
     {
+        playerControls.Gameplay.Disable();
         anim.Rebind();
         isActive = false;
         spriteRenderer.enabled = false;
