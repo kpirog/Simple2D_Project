@@ -32,6 +32,9 @@ Wykorzystane wzorce projektowe:
 -Object Pooling (spawnowanie enemy, spawnowanie coinów)
 -Singleton (system rund, system audio)
 
+Gameplay z gry:
+https://www.youtube.com/watch?v=aP-sCGdPAyY
+
 Projekt został wykonany w oparciu o New Input System.
 
 Wykorzystane assety:
