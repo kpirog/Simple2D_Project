@@ -12,6 +12,7 @@ public class PlayerAttackController : MonoBehaviour
 
     private Animator anim;
     private PlayerControls playerControls;
+    private GamepadCursor gamepadCursor;
 
     public bool HasAlreadyShuriken => shuriken != null;
 
@@ -19,6 +20,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         playerControls = new PlayerControls();
+        gamepadCursor = FindObjectOfType<GamepadCursor>();
     }
     private void OnEnable()
     {
@@ -68,8 +70,11 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (shuriken != null)
         {
-            shuriken.Throw();
+            Vector2 direction = (gamepadCursor.CurrentCursorPosition - (Vector2)transform.position).normalized;
+
+            shuriken.Throw(direction);
             shuriken = null;
+            
             AudioSystem.PlaySFX_Global(shurikenClip);
         }
     }

@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class GameRoundUI : MonoBehaviour
+public class RoundUI : MonoBehaviour
 {
     [SerializeField] private GameObject startRoundPanel;
     [SerializeField] private GameObject completeRoundPanel;
@@ -17,11 +18,14 @@ public class GameRoundUI : MonoBehaviour
     [SerializeField] private TMP_Text goblinCountText;
     [SerializeField] private TMP_Text nextRoundButtonText;
 
-    private GameRoundController gameRoundController;
+    [SerializeField] private Button startRoundButton;
+    [SerializeField] private Button nextRoundButton;
+
+    private RoundController roundController;
 
     private void Awake()
     {
-        gameRoundController = GameRoundController.Instance;
+        roundController = RoundController.Instance;
     }
     private void Start()
     {
@@ -47,15 +51,15 @@ public class GameRoundUI : MonoBehaviour
     }
     private void EventManager_OnGoblinKill()
     {
-        goblinCountText.text = gameRoundController.KilledGoblins.ToString();
+        goblinCountText.text = roundController.KilledGoblins.ToString();
     }
     private void EventManager_OnMushroomKill()
     {
-        mushroomCountText.text = gameRoundController.KilledMushrooms.ToString();
+        mushroomCountText.text = roundController.KilledMushrooms.ToString();
     }
     private void EventManager_OnCoinCollect()
     {
-        coinCountText.text = gameRoundController.CollectedGold.ToString();
+        coinCountText.text = roundController.CollectedGold.ToString();
     }
     private void EventManager_OnHeartUpdate(int currentHealth)
     {
@@ -71,15 +75,16 @@ public class GameRoundUI : MonoBehaviour
             }
         }
     }
-    private void SetRoundData(GameRoundData roundData)
+    private void SetRoundData(RoundData roundData)
     {
-        startRoundTitle.text = $"Round {gameRoundController.CurrentRoundIndex + 1}";
+        startRoundTitle.text = $"Round {roundController.CurrentRoundIndex + 1}";
 
         roundObjectiveSlots[0].SetObjectiveText(roundData.MushroomsToKill);
         roundObjectiveSlots[1].SetObjectiveText(roundData.GoblinsToKill);
         roundObjectiveSlots[2].SetObjectiveText(roundData.GoldToCollect);
 
         startRoundPanel.SetActive(true);
+        startRoundButton.Select();
     }
     private void EventManager_OnCompleteRoundScreenLoad(bool roundComplete)
     {
@@ -89,7 +94,7 @@ public class GameRoundUI : MonoBehaviour
         
         if (roundComplete)
         {
-            roundTitle = $"Round {gameRoundController.CurrentRoundIndex + 1} Completed!";
+            roundTitle = $"Round {roundController.CurrentRoundIndex + 1} Completed!";
             roundContent = "Congratulations!";
             buttonText = "Start next round!";
         }
@@ -102,6 +107,8 @@ public class GameRoundUI : MonoBehaviour
 
         completeRoundTitle.SetText(roundTitle);
         completeRoundContent.SetText(roundContent);
+
+        nextRoundButton.Select();
         nextRoundButtonText.SetText(buttonText);
 
         completeRoundPanel.SetActive(true);
@@ -121,6 +128,6 @@ public class GameRoundUI : MonoBehaviour
     {
         ResetView();
         completeRoundPanel.SetActive(false);
-        EventManager.OnStartRoundScreenLoaded(gameRoundController.CurrentRoundData);
+        EventManager.OnStartRoundScreenLoaded(roundController.CurrentRoundData);
     }
 }

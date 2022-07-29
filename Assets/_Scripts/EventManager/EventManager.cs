@@ -3,7 +3,7 @@ using System;
 public static class EventManager 
 {
     #region Round Events
-    public static event Action<GameRoundData> OnStartRoundScreenLoad;
+    public static event Action<RoundData> OnStartRoundScreenLoad;
     public static event Action<bool> OnCompleteRoundScreenLoad;
     public static event Action OnRoundStart;
     public static event Action<bool> OnRoundComplete;
@@ -12,7 +12,7 @@ public static class EventManager
     public static event Action OnCoinCollect;
     public static event Action<int> OnHeartUpdate;
     
-    public static void OnStartRoundScreenLoaded(GameRoundData roundData)
+    public static void OnStartRoundScreenLoaded(RoundData roundData)
     {
         OnStartRoundScreenLoad?.Invoke(roundData);
     }

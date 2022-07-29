@@ -13,15 +13,32 @@ public class GamepadCursor : MonoBehaviour
 
     private Mouse virtualMouse;
     private Mouse currentMouse;
+    private Camera mainCamera;
 
     private string previousControlScheme = "";
 
     private const string gamepadControlScheme = "Gamepad";
     private const string mouseControlScheme = "Keyboard&Mouse";
 
+    public Vector2 CurrentCursorPosition
+    {
+        get
+        {
+            if (playerInput.currentControlScheme == gamepadControlScheme)
+            {
+                return mainCamera.ScreenToWorldPoint(virtualMouse.position.ReadValue());
+            }
+            else
+            {
+                return mainCamera.ScreenToWorldPoint(currentMouse.position.ReadValue());
+            }
+        }
+    }
+
     private void OnEnable()
     {
         currentMouse = Mouse.current;
+        mainCamera = Camera.main;
 
         if (virtualMouse == null)
         {

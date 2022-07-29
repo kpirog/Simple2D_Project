@@ -29,7 +29,7 @@ public class EnemyHealth : MonoBehaviour
         {
             TakeDamage();
         }
-        else if(collision.gameObject.CompareTag("Shuriken"))
+        else if (collision.gameObject.CompareTag("Shuriken"))
         {
             InstantKill();
         }

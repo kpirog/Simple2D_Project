@@ -20,12 +20,6 @@ public class CrosshairController : MonoBehaviour
         EventManager.OnThrowShurikenEvent -= EventManager_OnThrowShurikenEvent;
         EventManager.OnRoundStart -= EventManager_OnRoundStart;
     }
-    //private void Update()
-    //{
-    //    if (!isActive) { return; }
-
-    //    crosshair.transform.position = Input.mousePosition;
-    //}
     private void EventManager_OnGetShurikenEvent()
     {
         ToggleCrosshair(true);

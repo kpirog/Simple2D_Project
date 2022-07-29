@@ -1,10 +1,10 @@
-public class GameRoundGoal 
+public class RoundGoal 
 {
     public int MushroomsToKill { get; }
     public int GoblinsToKill { get; }
     public int GoldToCollect { get; }
 
-    public GameRoundGoal(int MushroomsToKill, int GoblinsToKill, int GoldToCollect)
+    public RoundGoal(int MushroomsToKill, int GoblinsToKill, int GoldToCollect)
     {
         this.MushroomsToKill = MushroomsToKill;
         this.GoblinsToKill = GoblinsToKill;

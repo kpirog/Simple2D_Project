@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewGameRoundData", menuName = "GameRounds/Round", order = 0)]
-public class GameRoundData : ScriptableObject
+[CreateAssetMenu(fileName = "NewRoundData", menuName = "Rounds/New Round", order = 0)]
+public class RoundData : ScriptableObject
 {
     [Header("Spawning settings")]
     [SerializeField][Range(1, 4)] private int activeSpawnersCount;

@@ -154,5 +154,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionCollider: {fileID: 5212453652591949449}
-  shurikenClip: {fileID: 8300000, guid: 89aecee4112510c4eba6fe82fcc780a7, type: 3}
-  throwSpeed: 200
+  throwSpeed: 50

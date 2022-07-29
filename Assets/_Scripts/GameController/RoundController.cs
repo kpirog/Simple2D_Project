@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
-public class GameRoundController : MonoBehaviour
+public class RoundController : MonoBehaviour
 {
-    [SerializeField] private List<GameRoundData> roundDataList;
-    [SerializeField] private SpawnerManager spawnerManager;
+    [SerializeField] private List<RoundData> roundDataList;
+    [SerializeField] private EnemySpawnerManager spawnerManager;
     [SerializeField] private PlayerStateMachine player;
 
     [Header("Audio")]
@@ -13,7 +13,7 @@ public class GameRoundController : MonoBehaviour
     [SerializeField] private AudioClip lostClip;
 
     #region Round Variables
-    private GameRoundGoal currentRoundGoal;
+    private RoundGoal currentRoundGoal;
     private int currentRoundIndex = 0;
     private int killedMushrooms = 0;
     private int killedGoblins = 0;
@@ -23,11 +23,11 @@ public class GameRoundController : MonoBehaviour
     public int KilledMushrooms => killedMushrooms;
     public int KilledGoblins => killedGoblins;
     public int CollectedGold => collectedGold;
-    public GameRoundData CurrentRoundData => roundDataList[currentRoundIndex];
+    public RoundData CurrentRoundData => roundDataList[currentRoundIndex];
     #endregion
 
     #region Singleton
-    public static GameRoundController Instance;
+    public static RoundController Instance;
     private void Awake()
     {
         if (Instance != null)
@@ -64,7 +64,7 @@ public class GameRoundController : MonoBehaviour
         
         ResetCurrentRoundSettings();
 
-        currentRoundGoal = new GameRoundGoal(CurrentRoundData.MushroomsToKill, CurrentRoundData.GoblinsToKill, CurrentRoundData.GoldToCollect);
+        currentRoundGoal = new RoundGoal(CurrentRoundData.MushroomsToKill, CurrentRoundData.GoblinsToKill, CurrentRoundData.GoldToCollect);
         spawnerManager.SetRoundData(CurrentRoundData);
     }
     private void EventManager_OnRoundComplete(bool complete)

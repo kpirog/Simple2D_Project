@@ -60,26 +60,15 @@ public class Shuriken : ItemBase
 
         EventManager.OnGetShuriken();
     }
-    public void Throw()
+    public void Throw(Vector2 direction)
     {
         canDestroy = true;
 
         SetSpriteAndParent(false);
         SetPhysicsSettings(false);
 
-        rb.AddForce(GetThrowDirection() * throwSpeed, ForceMode2D.Impulse);
+        rb.AddForce(direction * throwSpeed, ForceMode2D.Impulse);
         EventManager.OnThrowShuriken();
-    }
-    private Vector3 GetThrowDirection()
-    {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = Camera.main.nearClipPlane;
-
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-        Vector3 direction = (worldPosition - player.transform.position).normalized;
-
-        return direction;
     }
     private void SetPhysicsSettings(bool isPickedUp)
     {

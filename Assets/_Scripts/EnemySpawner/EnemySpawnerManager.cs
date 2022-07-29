@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerManager : MonoBehaviour
+public class EnemySpawnerManager : MonoBehaviour
 {
     [SerializeField] private List<EnemySpawner> spawners;
 
     private float spawnDelay;
 
-    public void SetRoundData(GameRoundData roundData)
+    public void SetRoundData(RoundData roundData)
     {
         for (int i = 0; i < roundData.ActiveSpawnersCount; i++)
         {
