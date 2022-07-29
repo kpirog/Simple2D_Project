@@ -16,6 +16,6 @@ MonoBehaviour:
   timeToFirstSpawn: 1
   spawnRate: 10
   spawnDelay: 2
-  mushroomsToKill: 1
-  goblinsToKill: 1
-  goldToCollect: 1
+  mushroomsToKill: 2
+  goblinsToKill: 5
+  goldToCollect: 10
